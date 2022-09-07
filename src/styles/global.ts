@@ -10,7 +10,11 @@ const GlobalStyle = createGlobalStyle`
   :root {
     --white: #FFFFFF;
 
-    --gray-500: #1A1D23;
+    --gray-400: #62686E;
+    --gray-900: #1A1D23;
+
+    --green-500: #19CCB2;
+    --green-600: #00ad93;
   }
 
   @media(max-width: 1080px) {
@@ -27,7 +31,8 @@ const GlobalStyle = createGlobalStyle`
 
   body {
     background: var(--white);
-    color: var(--gray-500);
+    color: var(--gray-900);
+    -webkit-font-smoothing: antialiased;
   }
 
   body, input, textarea, select, button {
