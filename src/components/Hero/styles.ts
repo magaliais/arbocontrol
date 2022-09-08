@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 
-
-export const Hero = styled.section`
+export const Container = styled.section`
   height: 100vh;
   padding: 1.5rem;
 

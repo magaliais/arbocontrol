@@ -6,7 +6,7 @@ import bgVideo from '/src/assets/videos/bg-video.mp4';
 
 export default function Hero() {
   return (
-      <S.Hero>
+      <S.Container>
         <video autoPlay muted loop>
           <source src={`${bgVideo}#t=8,20`} type="video/mp4" />
         </video>
@@ -23,6 +23,6 @@ export default function Hero() {
           </header>
           <button>Denuncie Agora!</button>
         </div>
-      </S.Hero>
+      </S.Container>
   );
 }
