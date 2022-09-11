@@ -10,11 +10,14 @@ const GlobalStyle = createGlobalStyle`
   :root {
     --white: #FFFFFF;
 
+    --gray-100: #E6F0EF;
     --gray-400: #62686E;
     --gray-900: #1A1D23;
 
     --green-500: #19CCB2;
     --green-600: #00ad93;
+
+    --red-500: #DD3232;
   }
 
   @media(max-width: 1080px) {
