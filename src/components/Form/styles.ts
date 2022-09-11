@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const Container = styled.section`
   max-width: 1120px;
   margin: 0 auto;
-  padding: 4rem 0 10rem;
+  padding: 4rem 2rem 10rem;
 
   h1 {
     font-size: 3.75rem;
@@ -48,10 +48,23 @@ export const Container = styled.section`
       align-self: center;
       margin-top: 1rem;
 
+      &:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+  
+        &:hover {
+          background-color: var(--green-500);
+        }
+      }
+      
       &:hover {
         background-color: var(--green-600);
         color: var(--white);
       }
+    }
+
+    @media(max-width: 468px) {
+      padding: 3.125rem 2rem;
     }
   }
 `;
@@ -85,5 +98,11 @@ export const InputGroup = styled.div`
     border: 1px solid #ddd;
     padding: 0.5rem;
     margin-bottom: 1.25rem;
+  }
+
+  span {
+    color: var(--red-500);
+    margin-bottom: 2rem;
+    font-weight: 500;
   }
 `;
