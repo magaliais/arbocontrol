@@ -1,6 +1,8 @@
 import styled from 'styled-components';
+import heroBg from '../../assets/images/hero.jpg';
 
 export const Container = styled.section`
+  min-height: 100vh;
   height: 100vh;
   padding: 1.5rem;
 
@@ -15,12 +17,14 @@ export const Container = styled.section`
   }
 
   .content {
-    height: 100%;
+    min-height: 100%;
     display: flex;
     flex-direction: column;
-    align-content: center;
+    align-items: center;
+    justify-content: space-around;
 
     .images {
+      width: 100%;
       display: flex;
       align-items: center;
       justify-content: space-around;
@@ -41,7 +45,6 @@ export const Container = styled.section`
       color: var(--white);
       line-height: 6.5rem;
       text-shadow: 10px 10px 20px rgb(4, 21, 17, 0.8);
-      margin-top: 3rem;
     }
 
     button {
@@ -58,12 +61,19 @@ export const Container = styled.section`
       border-radius: 5px;
       transition: all 0.2s;
       align-self: center;
-      margin-top: 5rem;
+      box-shadow: 10px 10px 20px rgb(4, 21, 17, 0.3);
 
       &:hover {
         background-color: var(--white);
         color: var(--green-500);
       }
     }
+  }
+
+  @media (max-width: 768px) {
+    background-image: url(${heroBg});
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
   }
 `;
