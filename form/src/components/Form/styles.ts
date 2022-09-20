@@ -63,6 +63,11 @@ export const Container = styled.section`
       }
     }
 
+    p {
+      color: var(--red-500);
+      text-align: left;
+    }
+    
     @media(max-width: 468px) {
       padding: 3.125rem 2rem;
     }

@@ -1,14 +1,29 @@
 import React, { useEffect, useState } from 'react'
-import { useForm } from 'react-hook-form';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import api from '../../services/api';
+import neighborhoods from '../../mocks/neighborhoods';
 import * as S from './styles';
+import places from '../../mocks/place';
 
+interface FormValues {
+  cep: string;
+  street: string;
+  neighborhood: string;
+  houseNumber: string;
+  complement: string;
+  reference: string;
+  cellphoneNumber: string;
+  phoneNumber: string;
+  email: string;
+  place: string;
+  notes: string;
+}
 interface cepResponse {
   logradouro: string;
   erro?: 'true';
 }
 
 export default function Form() {
-  const [street, setStreet] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [complaintProtocol, setComplaintProtocol] = useState('');
 
@@ -27,7 +42,7 @@ export default function Form() {
     setComplaintProtocol(`${protocolNumber} - ${presentTime}`);
   }, [])
 
-  const { register, handleSubmit, watch, formState: { errors } } = useForm({
+  const { register, handleSubmit, getValues, setValue, formState: { errors } } = useForm<FormValues>({
     defaultValues: {
       cep: '',
       street: '',
@@ -44,7 +59,7 @@ export default function Form() {
   });
 
   async function fetchStreet() {
-    const cep = watch('cep');
+    const cep = getValues('cep');
 
     // TODO outras verificações
     if(cep.length !== 8) {
@@ -61,12 +76,27 @@ export default function Form() {
           if(result.erro) {
             alert("Não foi possível encontrar o CEP informado");
           }
-          setStreet(result.logradouro);
+          setValue("street", result.logradouro)
         })
         .catch(err => {
           alert(err);
         })
     }
+  }
+
+  const onSubmitComplaint: SubmitHandler<FormValues> = async (data) => {
+    setIsLoading(true);
+    console.log(data);
+    await api
+      .post("/complaint", data)
+      .then((response) => {
+        console.log(response);
+        alert(response.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    setIsLoading(false);
   }
 
   return (
@@ -77,10 +107,7 @@ export default function Form() {
         entraremos em contato e tomaremos as medidas necessárias.
       </p>
       <p>Obrigado por ajudar a cidade</p>
-      <form onSubmit={handleSubmit((data) => {
-        setIsLoading(true);
-        console.log(data)
-      })}>
+      <form onSubmit={handleSubmit(onSubmitComplaint)}>
         <S.InputGroup>
           <label htmlFor="cep">CEP *</label>
           <input
@@ -106,23 +133,18 @@ export default function Form() {
 
         <S.InputGroup>
           <label htmlFor="street">Logradouro *</label>
-          <input id="street" type="text" disabled value={street || ""} {...register("street", {})}/>
+          <input id="street" type="text" disabled {...register("street", {})}/>
         </S.InputGroup>
 
         <S.InputGroup>
-          <label htmlFor="neighborhood">Bairro*</label>
+          <label htmlFor="neighborhood">Bairro *</label>
           <select 
             id="neighborhood"
             {...register("neighborhood", {
               required: 'O campo "Bairro" é obrigatório'
             })}
           >
-            {/* // TODO buscar as informações das opções de outro arquivo */}
-            <option value="215">Adolfo Vireque</option>
-            <option value="223">Aeroporto</option>
-            <option value="676">Aeroporto Municipal Francisco Álvares de Assis</option>
-            <option value="302">Aldeia</option>
-            <option value="498">Alphaville</option>
+            {neighborhoods.map(hit => <option value={hit.id}>{hit.name}</option>)}
           </select>
           {errors.neighborhood?.message !== undefined && <span>{errors.neighborhood?.message}</span>}
         </S.InputGroup>
@@ -168,16 +190,11 @@ export default function Form() {
         {/* // TODO imagem */}
 
         <S.InputGroup>
-          <label htmlFor="place">Local favorável de foco*</label>
+          <label htmlFor="place">Local favorável de foco *</label>
           <select id="place" {...register('place', {
             required: 'O campo "Local favorável de foco" é obrigatório'
           })}>
-            {/* // TODO buscar as informações das opções de outro arquivo */}
-            <option value="1">Acumulador</option>
-            <option value="2">Ação conjunta</option>
-            <option value="3">Boca de lobo entupida</option>
-            <option value="4">Bromélias</option>
-            <option value="3">Caixa d'água destampada</option>
+            {places.map(hit => <option value={hit.id}>{hit.name}</option>)}
           </select>
           {errors.place?.message !== undefined && <span>{errors.place?.message}</span>}
         </S.InputGroup>
@@ -185,6 +202,8 @@ export default function Form() {
           <label htmlFor="notes">Observações &#40;Opcional&#41;</label>
           <textarea id="notes" {...register("notes")}></textarea>
         </S.InputGroup>
+
+        <p>* campos de preenchimento obrigatório</p>
 
         <S.InputGroup>
           <label htmlFor="complaintProtocol">Protocolo da Denúncia</label>
