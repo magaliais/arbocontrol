@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const Container = styled.section`
-  padding: 4rem 0 10rem;
+  padding: 4rem 0;
 `;
 
 export const Content = styled.article`
@@ -15,12 +15,57 @@ export const Content = styled.article`
     font-weight: 500;
     text-align: center;
     color: var(--green-500);
-    margin-bottom: 3rem;
+    margin-bottom: 1.5rem;
   }
 
   p {
     text-align: center;
-    margin-bottom: 1.5rem;
     font-size: 1rem;
+  }
+  
+  section {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 1rem;
+    margin-top: 4rem;
+    
+    @media(max-width: 768px) {
+      grid-template-columns: 1fr;
+    }
+  }
+`;
+
+export const Card = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+
+  strong {
+    font-family: "Roboto Slab";
+    text-transform: uppercase;
+    text-align: center;
+  }
+
+  p {
+    line-height: 1.4rem;
+    text-align: center;
+  }
+
+  @media (max-width: 768px) {
+    max-width: 420px;
+    margin: 0 auto;
+  }
+`;
+
+export const Logos = styled.div`
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  margin-top: 4rem;
+
+  img {
+    max-width: 100%;
   }
 `;
