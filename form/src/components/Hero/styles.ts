@@ -1,3 +1,4 @@
+import { HashLink } from 'react-router-hash-link';
 import styled from 'styled-components';
 import heroBg from '../../assets/images/hero.jpg';
 
@@ -46,28 +47,6 @@ export const Container = styled.section`
       line-height: 6.5rem;
       text-shadow: 10px 10px 20px rgb(4, 21, 17, 0.8);
     }
-
-    button {
-      background-color: var(--green-500);
-      border: none;
-      outline: none;
-      padding: 1rem 2rem;
-      width: max-content;
-      font-family: "Roboto";
-      font-size: 1.125rem;
-      font-weight: 500;
-      letter-spacing: 2px;
-      color: var(--white);
-      border-radius: 5px;
-      transition: all 0.2s;
-      align-self: center;
-      box-shadow: 10px 10px 20px rgb(4, 21, 17, 0.3);
-
-      &:hover {
-        background-color: var(--white);
-        color: var(--green-500);
-      }
-    }
   }
 
   @media (max-width: 768px) {
@@ -75,5 +54,27 @@ export const Container = styled.section`
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
+  }
+`;
+
+export const HashLinkButton = styled(HashLink)`
+  background-color: var(--green-500);
+  border: none;
+  outline: none;
+  padding: 1rem 2rem;
+  width: max-content;
+  font-family: "Roboto";
+  font-size: 1.125rem;
+  font-weight: 500;
+  letter-spacing: 2px;
+  color: var(--white);
+  border-radius: 5px;
+  transition: all 0.2s;
+  align-self: center;
+  box-shadow: 10px 10px 20px rgb(4, 21, 17, 0.3);
+
+  &:hover {
+    background-color: var(--white);
+    color: var(--green-500);
   }
 `;

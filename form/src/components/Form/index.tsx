@@ -101,7 +101,7 @@ export default function Form() {
 
   return (
     <S.Container>
-      <h1>Faça sua denúncia abaixo</h1>
+      <h1 id='hashForm'>Faça sua denúncia abaixo</h1>
       <p>
         Preencha o formulário abaixo. Assim que você enviar sua denúncia
         entraremos em contato e tomaremos as medidas necessárias.

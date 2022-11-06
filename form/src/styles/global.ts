@@ -20,6 +20,10 @@ const GlobalStyle = createGlobalStyle`
     --red-500: #DD3232;
   }
 
+  html {
+    scroll-behavior: smooth;
+  }
+
   @media(max-width: 1080px) {
     html {
       font-size: 93.75%;
