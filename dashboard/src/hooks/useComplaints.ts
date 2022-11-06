@@ -48,7 +48,7 @@ export async function getComplaints(currentPage: number): Promise<GetComplaintsR
       email: complaint.email,
       place: complaint.place,
       notes: complaint.notes,
-      createdAt: new Date(complaint.createdAt).toLocaleDateString("pt-br", {
+      createdAt: new Date(complaint.created_at).toLocaleDateString("pt-br", {
         day: "2-digit",
         month: "long",
         year: "numeric",
