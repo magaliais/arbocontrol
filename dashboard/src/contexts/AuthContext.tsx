@@ -11,8 +11,7 @@ import { api } from "../services/apiClient";
 
 type User = {
   email: string;
-  permissions: string[];
-  roles: string[];
+  name: string;
 };
 
 type SignInCredentials = {
@@ -36,8 +35,8 @@ type AuthProviderProps = {
 export const AuthContext = createContext({} as AuthContextData);
 
 export function signOut() {
-  destroyCookie(undefined, "nextauth.token");
-  destroyCookie(undefined, "nextauth.refreshToken");
+  destroyCookie(undefined, "@arbocontrol:token");
+  destroyCookie(undefined, "@arbocontrol:refreshToken");
 
   Router.push("/");
 }
@@ -48,15 +47,15 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
   useEffect(() => {
     // obtém todos os cookies salvos
-    const { "nextauth.token": token } = parseCookies();
+    const { "@arbocontrol:token": token } = parseCookies();
 
     if (token) {
       api
         .get("/me")
         .then((response) => {
-          const { email, permissions, roles } = response.data;
+          const { email, name } = response.data;
 
-          setUser({ email, permissions, roles });
+          setUser({ email, name });
         })
         .catch(() => {
           signOut();
@@ -71,7 +70,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
         password,
       });
 
-      const { token, refreshToken, permissions, roles } = response.data;
+      const { token, refreshToken, name } = response.data;
+
 
       // sessionStorage -> Não fica disponível em outras sessões. Fechar a janela
       // encerra uma sessão
@@ -79,20 +79,19 @@ export function AuthProvider({ children }: AuthProviderProps) {
       // e usando Next isso pode ser um problema
       // cookies -> Pode ser acessado pelo lado do browser e do lado do servidor
 
-      setCookie(undefined, "nextauth.token", token, {
+      setCookie(undefined, "@arbocontrol:token", token, {
         maxAge: 60 * 60 * 24 * 30, // 30 days
         path: "/",
       });
 
-      setCookie(undefined, "nextauth.refreshToken", refreshToken, {
+      setCookie(undefined, "@arbocontrol:refreshToken", refreshToken, {
         maxAge: 60 * 60 * 24 * 30, // 30 days
         path: "/",
       });
 
       setUser({
         email,
-        permissions,
-        roles,
+        name
       });
 
       // atualiza o token de autorização do header das requisições
@@ -100,7 +99,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
       Router.push("/dashboard");
     } catch (err) {
-      console.log(err);
+      alert(err.response.data.message);
     }
   }
 
