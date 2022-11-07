@@ -11,7 +11,7 @@ const Chart = dynamic(() => import("react-apexcharts"), {
   ssr: false,
 });
 
-const options = {
+const areaOptions = {
   chart: {
     toolbar: {
       show: false,
@@ -25,10 +25,11 @@ const options = {
     show: false,
   },
   dataLabels: {
-    enabled: false,
+    enabled: true,
   },
   tooltip: {
-    enabled: false,
+    enabled: true,
+    theme: 'dark',
   },
   xaxis: {
     type: "datetime",
@@ -39,13 +40,18 @@ const options = {
       color: theme.colors.gray[600],
     },
     categories: [
-      "2022-09-13T00:00:00.000Z",
-      "2022-09-14T00:00:00.000Z",
-      "2022-09-15T00:00:00.000Z",
-      "2022-09-16T00:00:00.000Z",
-      "2022-09-17T00:00:00.000Z",
-      "2022-09-18T00:00:00.000Z",
-      "2022-09-19T00:00:00.000Z",
+      "2022-01-01T00:00:00.000Z",
+      "2022-02-01T00:00:00.000Z",
+      "2022-03-01T00:00:00.000Z",
+      "2022-04-01T00:00:00.000Z",
+      "2022-05-01T00:00:00.000Z",
+      "2022-06-01T00:00:00.000Z",
+      "2022-07-01T00:00:00.000Z",
+      "2022-08-01T00:00:00.000Z",
+      "2022-09-01T00:00:00.000Z",
+      "2022-10-01T00:00:00.000Z",
+      "2022-11-01T00:00:00.000Z",
+      "2022-12-01T00:00:00.000Z",
     ],
   },
   fill: {
@@ -59,7 +65,82 @@ const options = {
   },
 };
 
-const series = [{ name: "series1", data: [31, 120, 10, 28, 51, 18, 109] }];
+const series = [
+  {
+    name: "series1",
+    data: [93, 120, 105, 183, 230, 292, 200, 180, 124, 144, 82, 73],
+  },
+];
+
+
+const donutOptions = {
+  labels: [
+    "Zona Norte",
+    "Zona Sul",
+    "Central",
+    "Zona Leste",
+    "Zona Oeste",
+    "Zona Nordeste",
+    "Zona Sudeste",
+  ],
+
+  plotOptions: {
+    pie: {
+      donut: {
+        size: "65%",
+        labels: {
+          show: true,
+          name: {
+            fontSize: "12",
+            fontFamily: "Roboto",
+          },
+          value: {
+            fontSize: "16",
+            offsetY: 0,
+          },
+          total: {
+            show: true,
+            showAlways: true, // Remove show always to show specific info
+          },
+        },
+      },
+    },
+  },
+  colors: [
+    "#dc2626",
+    "#2E93fA", 
+    "#66DA26", 
+    "#546E7A", 
+    "#E91E63", 
+    "#a21caf",
+    "#FF9800"
+  ],
+  dataLabels: {
+    enabled: false,
+    style: {
+      fontSize: "12",
+      fontWeight: "400",
+      fontFamily: "Roboto",
+    },
+  },
+
+  chart: {
+    toolbar: {
+      show: false,
+    },
+    foreColor: theme.colors.gray[500],
+  },
+  fill: {
+    opacity: 0.8,
+    type: "solid",
+  },
+  stroke: {
+    show: false,
+    width: 1,
+  },
+};
+
+const donutSeries = [44, 55, 41, 17, 15, 10, 20];
 
 export default function Charts() {
   return (
@@ -69,18 +150,18 @@ export default function Charts() {
       <Flex w="100%" my="6" maxW={1480} mx="auto" px="6">
         <Sidebar />
 
-        <SimpleGrid flex="1" gap="4" minChildWidth="320px" align="flex-start">
+        <SimpleGrid flex="1" gap="4" minChildWidth="480px" align="flex-start">
           <Box p={["6", "8"]} bg="gray.800" borderRadius={8} pb="4">
             <Text fontSize="lg" mb="4">
               Denúncias
             </Text>
-            <Chart type="area" height={160} options={options} series={series} />
+            <Chart type="area" height={160} options={areaOptions} series={series} />
           </Box>
           <Box p={["6", "8"]} bg="gray.800" borderRadius={8} pb="4">
             <Text fontSize="lg" mb="4">
               Região
             </Text>
-            <Chart type="area" height={160} options={options} series={series} />
+            <Chart type="donut" height={160} options={donutOptions} series={donutSeries} />
           </Box>
         </SimpleGrid>
       </Flex>
