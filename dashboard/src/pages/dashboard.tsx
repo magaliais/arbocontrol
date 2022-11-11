@@ -4,9 +4,22 @@ import { Box, Flex, SimpleGrid, Spinner, Text, theme } from '@chakra-ui/react'
 import { Header } from '../components/Header'
 import { Sidebar } from '../components/Sidebar';
 import { useComplaintsStatus } from '../hooks/useComplaintsStatus';
+import { useAuth } from '../contexts/AuthContext';
+import { api } from '../services/apiClient';
+import { withSSRAuth } from '../utils/withSSRAuth';
+import { setupAPIClient } from '../services/api';
 
 export default function Dashboard() {
+  const { user, signOut } = useAuth();
+
   const { data, isLoading, isFetching, error } = useComplaintsStatus();
+
+  useEffect(() => {
+    api.get("/me", {params: {
+      
+    }})
+      .then((response) => console.log(response));
+  }, []);
 
   return (
     <Flex direction="column" h="100vh">
@@ -75,3 +88,14 @@ export default function Dashboard() {
     </Flex>
   );
 }
+
+export const getServerSideProps = withSSRAuth(async (ctx) => {
+  const apiClient = setupAPIClient(ctx);
+  const response = await apiClient.get("/me");
+
+  console.log(response.data);
+
+  return {
+    props: {},
+  };
+});
