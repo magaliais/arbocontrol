@@ -3,10 +3,12 @@ import cors from 'cors';
 import { CreateComplaintController } from "./use-cases/createComplaint/createComplaintController";
 import { GetComplaintsController } from "./use-cases/getComplaints/getComplaintsController";
 import { GetComplaintsStatusController } from "./use-cases/getComplaintsStatus/getComplaintsStatusController";
+import { GetComplaintController } from "./use-cases/getComplaint/getComplaintController";
 
 const createComplaintController = new CreateComplaintController();
-const getComplaintsController = new GetComplaintsController();
 const getComplaintsStatusController = new GetComplaintsStatusController();
+const getComplaintsController = new GetComplaintsController();
+const getComplaintController = new GetComplaintController();
 
 export const routes = express.Router();
 
@@ -47,9 +49,24 @@ routes.get("/complaints", (req, res) => {
   }
 });
 
+routes.get("/complaints/:id", (req, res) => { 
+  console.log(`⚡️ [server]: GET /complaints/${req.params.id}`);
+
+  // * Permite que a URL de produção faça esta requisição
+  res.header("Access-Control-Allow-Origin", "http://localhost:3000");
+
+  try {
+    const response = getComplaintController.handle(req, res);
+    return response;
+  } catch (err) {
+    console.log(err);
+    return res.status(500).send();
+  }
+});
+
 routes.get("/dashboard", (req, res) => { 
   console.log("⚡️ [server]: GET /dashboard");
-
+  
   // * Permite que a URL de produção faça esta requisição
   res.header("Access-Control-Allow-Origin", "http://localhost:3000");
 
@@ -60,6 +77,55 @@ routes.get("/dashboard", (req, res) => {
     console.log(err);
     return res.status(500).send();
   }
+});
+
+routes.post('/sessions', (req, res) => {
+  console.log("⚡️ [server]: POST /sessions");
+
+  // * Permite que a URL de produção faça esta requisição
+  res.header("Access-Control-Allow-Origin", "http://localhost:3000");
+
+  const { email, password } = req.body as {
+    email: string;
+    password: string;
+  };
+
+  // TODO verificação das credenciais
+  if (email === "gabriel.ashm@hotmail.com") {
+    if (password === "123123123") {
+      return res.json({
+        token: "testToken",
+        refreshToken: "testRefreshToken",
+        name: "Gabriel Albuquerque",
+      });
+    }
+    return res.status(401).json({
+      error: true,
+      message: "Senha incorreta",
+    });
+  }
+})
+
+routes.get("/me", (req, res) => {
+  const email = req;
+
+  // * Permite que a URL de produção faça esta requisição
+  res.header("Access-Control-Allow-Origin", "http://localhost:3000");
+
+  // ? verifica se o usuário existe no banco
+  // const user = users.get(email);
+
+  //? se o usuário não existe
+  // if (!user) {
+  //   return res
+  //     .status(400)
+  //     .json({ error: true, message: "User not found." });
+  // }
+
+  return res.json({
+    email: "gabriel.ashm@hotmail.com",
+    name: "Gabriel Albuquerque Magalhães",
+  });
 });
 
 // TODO rota para criar usuário
