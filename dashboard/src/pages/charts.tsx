@@ -142,6 +142,66 @@ const donutOptions = {
 
 const donutSeries = [44, 55, 41, 17, 15, 10, 20];
 
+
+const pieOptions = {
+  labels: [
+    "Pendentes",
+    "Finalizadas",
+  ],
+
+  plotOptions: {
+    pie: {
+      donut: {
+        size: "65%",
+        labels: {
+          show: true,
+          name: {
+            fontSize: "12",
+            fontFamily: "Roboto",
+          },
+          value: {
+            fontSize: "16",
+            offsetY: 0,
+          },
+          total: {
+            show: true,
+            showAlways: true, // Remove show always to show specific info
+          },
+        },
+      },
+    },
+  },
+  colors: [
+    "#dc2626",
+    "#2E93fA",
+  ],
+  dataLabels: {
+    enabled: false,
+    style: {
+      fontSize: "12",
+      fontWeight: "400",
+      fontFamily: "Roboto",
+    },
+  },
+
+  chart: {
+    toolbar: {
+      show: false,
+    },
+    foreColor: theme.colors.gray[500],
+  },
+  fill: {
+    opacity: 0.8,
+    type: "solid",
+  },
+  stroke: {
+    show: false,
+    width: 1,
+  },
+};
+
+const pieSeries = [8, 3];
+
 export default function Charts() {
   return (
     <Flex direction="column" h="100vh">
@@ -162,6 +222,12 @@ export default function Charts() {
               Região
             </Text>
             <Chart type="donut" height={160} options={donutOptions} series={donutSeries} />
+          </Box>
+          <Box p={["6", "8"]} bg="gray.800" borderRadius={8} pb="4">
+            <Text fontSize="lg" mb="4">
+              Status
+            </Text>
+            <Chart type="pie" height={160} options={pieOptions} series={pieSeries} />
           </Box>
         </SimpleGrid>
       </Flex>
