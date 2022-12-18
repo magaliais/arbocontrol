@@ -35,6 +35,6 @@ export class CreateComplaintController {
       notes,
     });
 
-    return res.status(201).send("Denúncia registrada com sucesso!");
+    return res.status(201).send({ message: "Denúncia registrada com sucesso!", id: result.id });
   }
 }

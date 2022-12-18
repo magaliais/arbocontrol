@@ -10,6 +10,7 @@ export default function Modal({ isModalOpen, setIsModalOpen, complaintProtocol }
   return (
     <S.Overlay>
       <S.Modal>
+        <strong>Sua denúncia foi registrada com sucesso!</strong>
         <p>Número do Protocolo da Denúncia</p>
         <span>{complaintProtocol}</span>
         <button onClick={() => setIsModalOpen(false)}>OK</button>

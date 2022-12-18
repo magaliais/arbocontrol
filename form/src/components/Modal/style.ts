@@ -22,16 +22,22 @@ export const Modal = styled.div`
   display: flex;
   flex-direction: column;
 
+  strong {
+    margin-bottom: 1rem;
+    font-size: 1.25rem;
+    text-align: center;
+  }
+
   p {
     font-size: 1.2rem;
     margin-bottom: 1rem;
     text-align: center;
   }
-  
+
   span {
     margin-bottom: 2rem;
     text-align: center;
-    font-size: 2rem;
+    font-size: 1.5rem;
     font-weight: 600;
     letter-spacing: 1px;
     color: var(--green-500);

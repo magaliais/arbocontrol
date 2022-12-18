@@ -23,24 +23,13 @@ interface cepResponse {
   erro?: 'true';
 }
 
-export default function Form() {
+interface FormProps {
+  setIsModalOpen: (state: boolean) => void;
+  setComplaintProtocol: (state: string) => void;
+}
+
+export default function Form({ setIsModalOpen, setComplaintProtocol }: FormProps) {
   const [isLoading, setIsLoading] = useState(false);
-  const [complaintProtocol, setComplaintProtocol] = useState('');
-
-  useEffect(() => {
-    const presentTime = Intl.DateTimeFormat('pt-BR', {
-      day: '2-digit',
-      month: '2-digit',
-      year: '2-digit',
-      hour: '2-digit',
-      minute: '2-digit'
-    }).format(new Date).replaceAll('/', '-');
-
-    // TODO obter número do protocolo atual
-    const protocolNumber = 'N.12'
-
-    setComplaintProtocol(`${protocolNumber} - ${presentTime}`);
-  }, [])
 
   const { register, handleSubmit, getValues, setValue, formState: { errors } } = useForm<FormValues>({
     defaultValues: {
@@ -111,13 +100,13 @@ export default function Form() {
       ...data,
       image: image
     }
-    console.log(payload);
 
     await api
       .post("/complaint", payload)
       .then((response) => {
         console.log(response);
-        alert(response.data);
+        setComplaintProtocol(response.data.id);
+        setIsModalOpen(true);
       })
       .catch((err) => {
         console.log(err);
@@ -236,10 +225,10 @@ export default function Form() {
 
         <p>* campos de preenchimento obrigatório</p>
 
-        <S.InputGroup>
+        {/* <S.InputGroup>
           <label htmlFor="complaintProtocol">Protocolo da Denúncia</label>
           <input id="complaintProtocol" type="text" disabled value={complaintProtocol} />
-        </S.InputGroup>
+        </S.InputGroup> */}
 
         <button disabled={isLoading} type='submit'>{isLoading ? 'Carregando...' : 'Enviar'}</button>
       </form>
