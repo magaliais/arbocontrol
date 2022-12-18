@@ -11,6 +11,7 @@ interface CreateComplaintDTO {
   cellphoneNumber: string;
   phoneNumber: string;
   email: string;
+  image: string;
   place: string;
   notes: string;
 }
@@ -26,6 +27,7 @@ export class CreateComplaintUseCase {
     cellphoneNumber,
     phoneNumber,
     email,
+    image,
     place,
     notes
   }: CreateComplaintDTO) {
@@ -41,6 +43,7 @@ export class CreateComplaintUseCase {
         cellphoneNumber,
         phoneNumber,
         email,
+        image,
         place,
         notes 
       },

@@ -13,6 +13,7 @@ export class CreateComplaintController {
       cellphoneNumber,
       phoneNumber,
       email,
+      image,
       place,
       notes,
     } = req.body;
@@ -29,6 +30,7 @@ export class CreateComplaintController {
       cellphoneNumber,
       phoneNumber,
       email,
+      image,
       place,
       notes,
     });

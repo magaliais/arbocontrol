@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { ChangeEvent, useEffect, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form';
 import api from '../../services/api';
 import neighborhoods from '../../mocks/neighborhoods';
@@ -57,6 +57,27 @@ export default function Form() {
       notes: '',
     }
   });
+  const [image, setImage] = useState<string | ArrayBuffer | null>('');
+
+  async function handleSelectImage(inputFiles: FileList | null) {
+    // base64
+    const fileToLoad = inputFiles![0];
+
+    if(fileToLoad) {
+      // FileReader instance
+      const fileReader = new FileReader();
+
+      fileReader.onload = function (fileLoadedEvent) {
+        const fileAsBase64 = fileLoadedEvent.target!.result;
+
+        console.log(fileAsBase64);
+        setImage(fileAsBase64);
+      };
+
+      // convert to base64
+      fileReader.readAsDataURL(fileToLoad);
+    }
+  }
 
   async function fetchStreet() {
     const cep = getValues('cep');
@@ -86,9 +107,14 @@ export default function Form() {
 
   const onSubmitComplaint: SubmitHandler<FormValues> = async (data) => {
     setIsLoading(true);
-    console.log(data);
+    const payload = {
+      ...data,
+      image: image
+    }
+    console.log(payload);
+
     await api
-      .post("/complaint", data)
+      .post("/complaint", payload)
       .then((response) => {
         console.log(response);
         alert(response.data);
@@ -150,7 +176,7 @@ export default function Form() {
         </S.InputGroup>
 
         <S.InputGroup>
-          <label htmlFor="houseNumber">Número</label>
+          <label htmlFor="houseNumber">Número *</label>
           <input id="houseNumber" type="text" {...register("houseNumber", {
             required: 'O campo "Número" é obrigatório'
           })} />
@@ -188,6 +214,11 @@ export default function Form() {
         </S.InputGroup>
 
         {/* // TODO imagem */}
+        <S.InputGroup>
+          <label htmlFor="image">Foto &#40;Opcional&#41;</label>
+          <input id="image" type="file" onChange={(e) => handleSelectImage(e.target.files)} />
+          {/* <img src={image && image} alt="" /> */}
+        </S.InputGroup>
 
         <S.InputGroup>
           <label htmlFor="place">Local favorável de foco *</label>
