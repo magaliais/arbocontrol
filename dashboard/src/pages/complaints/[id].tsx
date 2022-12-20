@@ -21,6 +21,7 @@ import { Header } from "../../components/Header";
 import { Sidebar } from "../../components/Sidebar";
 import { api } from "../../services/apiClient";
 import { useRouter } from "next/router";
+import { useComplaint } from "../../hooks/useComplaint";
 
 type CreateUserFormData = {
   name: string;
@@ -45,6 +46,8 @@ export default function CreateUser() {
   const router = useRouter();
   const { id } = router.query;
 
+  const { data, isLoading, isFetching, error } = useComplaint(id);
+
   return (
     <Box>
       <Header />
@@ -59,14 +62,28 @@ export default function CreateUser() {
           bg="gray.800"
           p={["6", "8"]}
         >
-          <Heading size="lg" fontWeight="normal">
+          <Heading size="lg" fontWeight="normal" onClick={async () => {
+            await navigator.clipboard.writeText(id);
+          }}>
             Denúncia {id}
           </Heading>
 
           <Divider my="6" borderColor="gray.700" />
 
-          <VStack spacing="8" align="start">
-            <Text>ID: {id}</Text>
+          <VStack spacing="6" align="start">
+            {data?.complaint?.cep && <Text>CEP: {data?.complaint?.cep}</Text>}
+            {data?.complaint?.street && <Text>Rua: {data?.complaint?.street}</Text>}
+            {data?.complaint?.neighborhood && <Text>Bairro: {data?.complaint?.neighborhood}</Text>}
+            {data?.complaint?.houseNumber && <Text>Número: {data?.complaint?.houseNumber}</Text>}
+            {data?.complaint?.complement && <Text>Complemento: {data?.complaint?.complement}</Text>}
+            {data?.complaint?.reference && <Text>Referência: {data?.complaint?.reference}</Text>}
+            {data?.complaint?.cellphoneNumber && <Text>Número de celular: {data?.complaint?.cellphoneNumber}</Text>}
+            {data?.complaint?.phoneNumber && <Text>Número de telefone: {data?.complaint?.phoneNumber}</Text>}
+            {data?.complaint?.email && <Text>Email: {data?.complaint?.email}</Text>}
+            {data?.complaint?.notes && <Text>Observações: {data?.complaint?.notes}</Text>}
+            {data?.complaint?.createdAt && <Text>Data da criação: {data?.complaint?.createdAt}</Text>}
+            {data?.complaint?.status && <Text>Status: {data?.complaint?.status === 'pending' ? "Pendente" : "Finalizada"}</Text>}
+            <img src={data?.complaint?.image} alt="" />
           </VStack>
 
           <Flex mt="8" justify={["center", "flex-end"]}>
