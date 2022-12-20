@@ -4,11 +4,13 @@ import { CreateComplaintController } from "./use-cases/createComplaint/createCom
 import { GetComplaintsController } from "./use-cases/getComplaints/getComplaintsController";
 import { GetComplaintsStatusController } from "./use-cases/getComplaintsStatus/getComplaintsStatusController";
 import { GetComplaintController } from "./use-cases/getComplaint/getComplaintController";
+import { UpdateStatusController } from "./use-cases/updateStatus/updateStatusController";
 
 const createComplaintController = new CreateComplaintController();
 const getComplaintsStatusController = new GetComplaintsStatusController();
 const getComplaintsController = new GetComplaintsController();
 const getComplaintController = new GetComplaintController();
+const updateStatusController = new UpdateStatusController();
 
 export const routes = express.Router();
 
@@ -57,6 +59,21 @@ routes.get("/complaints/:id", (req, res) => {
 
   try {
     const response = getComplaintController.handle(req, res);
+    return response;
+  } catch (err) {
+    console.log(err);
+    return res.status(500).send();
+  }
+});
+
+routes.post("/update-status", (req, res) => { 
+  console.log(`⚡️ [server]: POST /update-status/${req.body.id} => ${req.body.status}`);
+
+  // * Permite que a URL de produção faça esta requisição
+  res.header("Access-Control-Allow-Origin", "http://localhost:3000");
+
+  try {
+    const response = updateStatusController.handle(req, res);
     return response;
   } catch (err) {
     console.log(err);

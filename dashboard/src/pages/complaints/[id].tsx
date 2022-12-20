@@ -22,6 +22,7 @@ import { Sidebar } from "../../components/Sidebar";
 import { api } from "../../services/apiClient";
 import { useRouter } from "next/router";
 import { useComplaint } from "../../hooks/useComplaint";
+import { useEffect, useState } from "react";
 
 type CreateUserFormData = {
   name: string;
@@ -30,23 +31,27 @@ type CreateUserFormData = {
   password_confirmation: string;
 };
 
-const createUserFormSchema = yup.object().shape({
-  name: yup.string().required("Nome obrigatório"),
-  email: yup.string().required("E-mail obrigatório").email("E-mail inválido"),
-  password: yup
-    .string()
-    .required("Senha obrigatória")
-    .min(6, "No mínimo 6 caracteres"),
-  password_confirmation: yup
-    .string()
-    .oneOf([null, yup.ref("password")], "As senhas precisam ser iguais"),
-});
-
 export default function CreateUser() {
+  const [status, setStatus] = useState<string>('');
+
   const router = useRouter();
   const { id } = router.query;
-
+  
   const { data, isLoading, isFetching, error } = useComplaint(id);
+
+  useEffect(() => {
+    setStatus(data?.complaint?.status);
+    if(typeof id === 'string') {
+      localStorage.setItem("@arbocontrol:id", id);
+    }
+  }, [data]);
+
+  async function submitStatus() {
+    api.post('/update-status', {
+      id: id,
+      status: status,
+    })
+  }
 
   return (
     <Box>
@@ -63,7 +68,9 @@ export default function CreateUser() {
           p={["6", "8"]}
         >
           <Heading size="lg" fontWeight="normal" onClick={async () => {
-            await navigator.clipboard.writeText(id);
+            if(typeof id === 'string') {
+              await navigator.clipboard.writeText(id);
+            }
           }}>
             Denúncia {id}
           </Heading>
@@ -82,13 +89,20 @@ export default function CreateUser() {
             {data?.complaint?.email && <Text>Email: {data?.complaint?.email}</Text>}
             {data?.complaint?.notes && <Text>Observações: {data?.complaint?.notes}</Text>}
             {data?.complaint?.createdAt && <Text>Data da criação: {data?.complaint?.createdAt}</Text>}
-            {data?.complaint?.status && <Text>Status: {data?.complaint?.status === 'pending' ? "Pendente" : "Finalizada"}</Text>}
+              {status && (
+                <HStack justify="space-between" width="100%">
+                  <Text>Status: {status === 'pending' ? "Pendente" : "Finalizada"}</Text>
+                  {status === 'pending' ? 
+                    (<Button colorScheme="green" onClick={() => setStatus('finished')}>Finalizar</Button>) : 
+                    (<Button colorScheme="green" onClick={() => setStatus('pending')}>Reabrir</Button>)}
+                </HStack>
+              )}
             <img src={data?.complaint?.image} alt="" />
           </VStack>
 
           <Flex mt="8" justify={["center", "flex-end"]}>
             <HStack spacing="4">
-              <Link href="/users" passHref>
+              <Link href="/complaints" passHref>
                 <Button as="a" colorScheme="whiteAlpha">
                   Cancelar
                 </Button>
@@ -96,6 +110,7 @@ export default function CreateUser() {
               <Button
                 type="submit"
                 colorScheme="green"
+                onClick={submitStatus}
                 // isLoading={formState.isSubmitting}
               >
                 Salvar
