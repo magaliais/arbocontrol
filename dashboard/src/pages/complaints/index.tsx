@@ -9,6 +9,7 @@ import { Header } from "../../components/Header";
 import { Pagination } from "../../components/Pagination";
 import { Sidebar } from "../../components/Sidebar";
 import { RiAddLine, RiPencilLine } from "react-icons/ri";
+import { useRouter } from "next/router";
 
 export default function ComplaintsList() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -19,6 +20,8 @@ export default function ComplaintsList() {
     base: false,
     lg: true,
   });
+
+  const router = useRouter();
 
   // async function handlePrefetchComplaint(complaintId: string) {
   //   await queryClient.prefetchQuery(['complaint', complaintId], async () => {
@@ -41,22 +44,8 @@ export default function ComplaintsList() {
           <Flex mb="8" justify="space-between" align="center">
             <Heading size="lg" fontWeight="normal">
               Denúncias
-
               { !isLoading && isFetching && <Spinner size="sm" color="gray.500" ml="4" /> }
             </Heading>
-
-            <Link href="/complaints/create" passHref>
-              <Button
-                as="a"
-                size="sm"
-                fontSize="sm"
-                colorScheme="green"
-                leftIcon={<Icon as={RiAddLine} fontSize="20" />}
-                cursor="pointer"
-              >
-                Nova Denúncia
-              </Button>
-            </Link>
           </Flex>
 
           { isLoading ? (
@@ -72,10 +61,7 @@ export default function ComplaintsList() {
               <Table colorScheme="whiteAlpha">
                 <Thead>
                   <Tr>
-                    <Th px={["4", "4", "6"]} color="gray.300" w="8">
-                      <Checkbox colorScheme="green" />
-                    </Th>
-                    <Th>Protocolo</Th>
+                    <Th>CEP</Th>
                     {isWideVersion && <Th>Data de criação</Th>}
                     {isWideVersion && <Th>Status</Th>}
                   </Tr>
@@ -83,17 +69,13 @@ export default function ComplaintsList() {
                 <Tbody>
                   {data.complaints.map(complaint => {
                     return(
-                      <Tr key={complaint.id}>
-                        <Td px={["4", "4", "6"]}>
-                          <Checkbox colorScheme="green" />
-                        </Td>
+                      <Tr key={complaint.id} _hover={{ cursor: 'pointer', color: 'green.500' }} onClick={() => router.push(`/complaints/${complaint.id}`)}>
                         <Td px={["4", "4", "6"]}>
                           <Box>
                             <ChakraLink 
-                              _hover={{ textDecoration: 'none', color: 'green.500' }}
                               // onMouseEnter={() => handlePrefetchComplaint(complaint.id)}
                             >
-                              <Text fontWeight="bold">{complaint.neighborhood}</Text>
+                              <Text fontWeight="bold">{complaint.cep}</Text>
                             </ChakraLink>
                             <Text fontSize="sm" color="gray.300">
                               {complaint.email}
@@ -101,7 +83,7 @@ export default function ComplaintsList() {
                           </Box>
                         </Td>
                         {isWideVersion && <Td>{complaint.createdAt}</Td>}
-                        {isWideVersion && <Td>{complaint.status}</Td>}
+                        {isWideVersion && <Td>{complaint.status === "finished" ? "Finalizada" : "Pendente"}</Td>}
                       </Tr>
                     )
                   })}
