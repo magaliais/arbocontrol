@@ -40,14 +40,15 @@ export default function Dashboard() {
               {isLoading ? (
                 <Flex w="100%" justify="center">
                   <Spinner />
-                </Flex>) : (
-                  <Flex w="100%" height="100%" justify="center" align="center">
-                    <Text fontSize="2xl">{data?.complaintsStatus.total}</Text>
-                  </Flex>
-                )}
+                </Flex>
+              ) : (
+                <Flex w="100%" height="100%" justify="center" align="center">
+                  <Text fontSize="2xl">{data?.complaintsStatus.total}</Text>
+                </Flex>
+              )}
             </Flex>
           </Box>
-          <Box p={["6", "8"]} bg="gray.800" borderRadius={8}>
+          <Box p={["6", "8"]} bg="#bc3232" borderRadius={8}>
             <Text fontSize="lg" mb="4">
               Pendentes
               {!isLoading && isFetching && (
@@ -58,14 +59,15 @@ export default function Dashboard() {
               {isLoading ? (
                 <Flex w="100%" justify="center">
                   <Spinner />
-                </Flex>) : (
-                  <Flex w="100%" height="100%" justify="center" align="center">
-                    <Text fontSize="2xl">{data?.complaintsStatus.pending}</Text>
-                  </Flex>
-                )}
+                </Flex>
+              ) : (
+                <Flex w="100%" height="100%" justify="center" align="center">
+                  <Text fontSize="2xl">{data?.complaintsStatus.pending}</Text>
+                </Flex>
+              )}
             </Flex>
           </Box>
-          <Box p={["6", "8"]} bg="gray.800" borderRadius={8} pb="4">
+          <Box p={["6", "8"]} bg="green.600" borderRadius={8} pb="4">
             <Text fontSize="lg" mb="4">
               Finalizadas
               {!isLoading && isFetching && (
@@ -76,11 +78,12 @@ export default function Dashboard() {
               {isLoading ? (
                 <Flex w="100%" justify="center">
                   <Spinner />
-                </Flex>) : (
-                  <Flex w="100%" justify="center">
-                    <Text fontSize="2xl">{data?.complaintsStatus.finished}</Text>
-                  </Flex>
-                )}
+                </Flex>
+              ) : (
+                <Flex w="100%" justify="center">
+                  <Text fontSize="2xl">{data?.complaintsStatus.finished}</Text>
+                </Flex>
+              )}
             </Flex>
           </Box>
         </SimpleGrid>
