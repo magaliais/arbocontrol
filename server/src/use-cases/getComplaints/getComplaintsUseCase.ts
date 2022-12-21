@@ -3,7 +3,13 @@ import { prisma } from "../../prisma/client";
 
 export class GetComplaintsUseCase {
   async execute(): Promise<Complaint[]> {
-    const complaints = await prisma.complaint.findMany({});
+    const complaints = await prisma.complaint.findMany({
+      orderBy: [
+        {
+          created_at: "asc",
+        },
+      ],
+    });
 
     return complaints;
   }
