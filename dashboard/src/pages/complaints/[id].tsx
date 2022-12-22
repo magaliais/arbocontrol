@@ -77,7 +77,7 @@ export default function CreateUser() {
 
           <Divider my="6" borderColor="gray.700" />
 
-          <VStack spacing="6" align="start">
+          {/* <VStack spacing="6" align="start">
             {data?.complaint?.cep && <Text>CEP: {data?.complaint?.cep}</Text>}
             {data?.complaint?.street && <Text>Rua: {data?.complaint?.street}</Text>}
             {data?.complaint?.neighborhood && <Text>Bairro: {data?.complaint?.neighborhood}</Text>}
@@ -98,9 +98,131 @@ export default function CreateUser() {
                 </HStack>
               )}
             <img src={data?.complaint?.image} alt="" />
+          </VStack> */}
+
+          <VStack spacing="8">
+            <SimpleGrid minChildWidth="240px" spacing={["6", "8"]} w="100%">
+              <Input
+                name="cep"
+                label="CEP"
+                value={data?.complaint?.cep}
+                _disabled={{color: 'white'}}
+                isDisabled={true}
+                />
+              <Input
+                name="street"
+                label="Rua"
+                value={data?.complaint?.street}
+                _disabled={{color: 'white'}}
+                isDisabled={true}
+              />
+            </SimpleGrid>
+
+            <SimpleGrid minChildWidth="240px" spacing={["6", "8"]} w="100%">
+              <Input
+                name="neighborhood"
+                label="Bairro"
+                value={data?.complaint?.neighborhood}
+                _disabled={{color: 'white'}}
+                isDisabled={true}
+                />
+              <Input
+                name="houseNumber"
+                label="Número"
+                value={data?.complaint?.houseNumber}
+                _disabled={{color: 'white'}}
+                isDisabled={true}
+              />
+            </SimpleGrid>
+
+            <SimpleGrid minChildWidth="240px" spacing={["6", "8"]} w="100%">
+              <Input
+                name="complement"
+                label="Complemento"
+                value={data?.complaint?.complement}
+                _disabled={{color: 'white'}}
+                isDisabled={true}
+                />
+              <Input
+                name="reference"
+                label="Referência"
+                value={data?.complaint?.reference}
+                _disabled={{color: 'white'}}
+                isDisabled={true}
+              />
+            </SimpleGrid>
+
+            <SimpleGrid minChildWidth="240px" spacing={["6", "8"]} w="100%">
+              <Input
+                name="cellphoneNumber"
+                label="Número de celular"
+                value={data?.complaint?.cellphoneNumber}
+                _disabled={{color: 'white'}}
+                isDisabled={true}
+                />
+              <Input
+                name="phoneNumber"
+                label="Número de telefone"
+                value={data?.complaint?.phoneNumber}
+                _disabled={{color: 'white'}}
+                isDisabled={true}
+              />
+            </SimpleGrid>
+
+            <SimpleGrid minChildWidth="240px" spacing={["6", "8"]} w="100%">
+              <Input
+                name="email"
+                label="Email"
+                value={data?.complaint?.email}
+                _disabled={{color: 'white'}}
+                isDisabled={true}
+                />
+              <Input
+                name="notes"
+                label="Observações"
+                value={data?.complaint?.notes}
+                _disabled={{color: 'white'}}
+                isDisabled={true}
+              />
+            </SimpleGrid>
+
+            <SimpleGrid minChildWidth="240px" spacing={["6", "8"]} w="100%">
+              <Input
+                name="createdAt"
+                label="Data da criação"
+                value={data?.complaint?.createdAt}
+                _disabled={{color: 'white'}}
+                isDisabled={true}
+                />
+              <Input
+                name="updatedAt"
+                label="Data da última atualização"
+                value={data?.complaint?.updatedAt}
+                _disabled={{color: 'white'}}
+                isDisabled={true}
+              />
+            </SimpleGrid>
+
+            <SimpleGrid minChildWidth="240px" spacing={["6", "8"]} w="100%">
+              <Input
+                name="status"
+                label="Status"
+                value={status === 'pending' ? "Pendente" : "Finalizada"}
+                _disabled={{color: 'white'}}
+                isDisabled={true}
+                />
+            </SimpleGrid>
+
+            <img src={data?.complaint?.image} alt="" />
           </VStack>
 
-          <Flex mt="8" justify={["center", "flex-end"]}>
+          <Flex mt="8" justify={["center", "space-between"]}>
+            <HStack>
+              {status === 'pending' ? 
+              (<Button colorScheme="red" onClick={() => setStatus('finished')}>Finalizar</Button>) : 
+              (<Button colorScheme="green" onClick={() => setStatus('pending')}>Reabrir</Button>)}
+            </HStack>
+
             <HStack spacing="4">
               <Link href="/complaints" passHref>
                 <Button as="a" colorScheme="whiteAlpha">
