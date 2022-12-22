@@ -37,7 +37,7 @@ const places = [
   { id: "36", name: "Terrenos baldios" },
   { id: "37", name: "Toldos em desníveis" },
   { id: "38", name: "Vasilhames" },
-  { id: "39", name: "Vaso de plante" },
+  { id: "39", name: "Vaso de planta" },
   { id: "40", name: "Vistoria periódica" },
 ];
 
