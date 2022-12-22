@@ -4,15 +4,19 @@ import { useComplaints } from "../../hooks/useComplaints";
 import { queryClient } from "../../services/queryClient";
 import { api } from '../../services/apiClient';
 
-import { Box, Button, Checkbox, Flex, Heading, Icon, Spinner, Table, Tbody, Td, Text, Th, Thead, Tr, useBreakpointValue, Link as ChakraLink } from "@chakra-ui/react";
+import { Box, Button, Checkbox, Flex, Heading, Icon, Spinner, Table, Tbody, Td, Text, Th, Thead, Tr, useBreakpointValue, Link as ChakraLink, HStack } from "@chakra-ui/react";
 import { Header } from "../../components/Header";
 import { Pagination } from "../../components/Pagination";
 import { Sidebar } from "../../components/Sidebar";
 import { RiAddLine, RiPencilLine } from "react-icons/ri";
 import { useRouter } from "next/router";
+import { withSSRAuth } from "../../utils/withSSRAuth";
+import { setupAPIClient } from "../../services/api";
 
 export default function ComplaintsList() {
   const [currentPage, setCurrentPage] = useState(1);
+  // const [isPendingActive, setIsPendingActive] = useState<boolean>(false);
+  // const [isFinishedActive, setIsFinishedActive] = useState<boolean>(false);
 
   const { data, isLoading, isFetching, error } = useComplaints(currentPage);
 
@@ -46,6 +50,11 @@ export default function ComplaintsList() {
               Denúncias
               { !isLoading && isFetching && <Spinner size="sm" color="gray.500" ml="4" /> }
             </Heading>
+
+            {/* <HStack spacing="6">
+              <Button colorScheme='green'>Pendentes</Button>
+              <Button colorScheme='green'>Finalizadas</Button>
+            </HStack> */}
           </Flex>
 
           { isLoading ? (
@@ -102,3 +111,14 @@ export default function ComplaintsList() {
     </Box>
   );
 }
+
+export const getServerSideProps = withSSRAuth(async (ctx) => {
+  const apiClient = setupAPIClient(ctx);
+  const response = await apiClient.get("/me");
+
+  console.log(response.data);
+
+  return {
+    props: {},
+  };
+});
