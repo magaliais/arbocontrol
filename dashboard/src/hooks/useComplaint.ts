@@ -49,8 +49,12 @@ export async function getComplaint(
       month: "long",
       year: "numeric",
     }),
-    updatedAt: data.updated_at,
-  }
+    updatedAt: new Date(data.updated_at).toLocaleDateString("pt-br", {
+      day: "2-digit",
+      month: "long",
+      year: "numeric",
+    }),
+  };
   
   return { complaint };
 }
