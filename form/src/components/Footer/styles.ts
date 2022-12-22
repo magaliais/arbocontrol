@@ -63,9 +63,12 @@ export const Logos = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-around;
-  margin-top: 4rem;
 
   img {
     max-width: 100%;
+  }
+
+  @media (max-width: 768px) {
+    flex-direction: column;
   }
 `;
