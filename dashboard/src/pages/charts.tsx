@@ -144,10 +144,7 @@ const donutSeries = [44, 55, 41, 17, 15, 10, 20];
 
 
 const pieOptions = {
-  labels: [
-    "Pendentes",
-    "Finalizadas",
-  ],
+  labels: ["Inválidas", "Finalizadas", "Pendentes", "Em Atendimento" ],
 
   plotOptions: {
     pie: {
@@ -171,10 +168,7 @@ const pieOptions = {
       },
     },
   },
-  colors: [
-    "#dc2626",
-    "#2E93fA",
-  ],
+  colors: ["#bc3232", "#12A08B", "#a1a522", "#6632ba"],
   dataLabels: {
     enabled: false,
     style: {
@@ -200,7 +194,7 @@ const pieOptions = {
   },
 };
 
-const pieSeries = [8, 3];
+const pieSeries = [8, 3, 2, 5];
 
 export default function Charts() {
   return (
