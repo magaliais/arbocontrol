@@ -11,13 +11,34 @@ export class GetComplaintsStatusController {
 
     const complaintsStatus = result.reduce(
       (acc, cur) => {
-        cur.status === "pending" ? (acc.pending += 1) : (acc.finished += 1);
+        switch (cur.status) {
+          case "pending":
+            acc.pending += 1;
+            break;
+
+          case "finished":
+            acc.finished += 1;
+            break;
+
+          case "inAttendance":
+            acc.inAttendance += 1;
+            break;
+
+          case "invalid":
+            acc.invalid += 1;
+            break;
+        
+          default:
+            break;
+        }
 
         return acc;
       },
       {
         finished: 0,
         pending: 0,
+        inAttendance: 0,
+        invalid: 0,
       }
     );
 

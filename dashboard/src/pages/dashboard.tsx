@@ -48,7 +48,7 @@ export default function Dashboard() {
               )}
             </Flex>
           </Box>
-          <Box p={["6", "8"]} bg="#bc3232" borderRadius={8}>
+          <Box p={["6", "8"]} bg="#a1a522" borderRadius={8}>
             <Text fontSize="lg" mb="4">
               Pendentes
               {!isLoading && isFetching && (
@@ -82,6 +82,46 @@ export default function Dashboard() {
               ) : (
                 <Flex w="100%" justify="center">
                   <Text fontSize="2xl">{data?.complaintsStatus.finished}</Text>
+                </Flex>
+              )}
+            </Flex>
+          </Box>
+          <Box p={["6", "8"]} bg="#6632ba" borderRadius={8} pb="4">
+            <Text fontSize="lg" mb="4">
+              Em Atendimento
+              {!isLoading && isFetching && (
+                <Spinner size="sm" color="gray.500" ml="4" />
+              )}
+            </Text>
+            <Flex>
+              {isLoading ? (
+                <Flex w="100%" justify="center">
+                  <Spinner />
+                </Flex>
+              ) : (
+                <Flex w="100%" justify="center">
+                  <Text fontSize="2xl">
+                    {data?.complaintsStatus.inAttendance}
+                  </Text>
+                </Flex>
+              )}
+            </Flex>
+          </Box>
+          <Box p={["6", "8"]} bg="#bc3232" borderRadius={8} pb="4">
+            <Text fontSize="lg" mb="4">
+              Inválidas
+              {!isLoading && isFetching && (
+                <Spinner size="sm" color="gray.500" ml="4" />
+              )}
+            </Text>
+            <Flex>
+              {isLoading ? (
+                <Flex w="100%" justify="center">
+                  <Spinner />
+                </Flex>
+              ) : (
+                <Flex w="100%" justify="center">
+                  <Text fontSize="2xl">{data?.complaintsStatus.invalid}</Text>
                 </Flex>
               )}
             </Flex>

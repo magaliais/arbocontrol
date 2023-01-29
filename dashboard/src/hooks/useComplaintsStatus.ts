@@ -5,6 +5,8 @@ type ComplaintsStatus = {
   total: number;
   finished: number;
   pending: number;
+  inAttendance: number;
+  invalid: number;
 };
 
 type GetComplaintsStatusResponse = {
@@ -19,6 +21,8 @@ export async function getComplaintsStatus(): Promise<GetComplaintsStatusResponse
       total: data.total,
       finished: data.finished,
       pending: data.pending,
+      inAttendance: data.inAttendance,
+      invalid: data.invalid,
     }
   };
 }

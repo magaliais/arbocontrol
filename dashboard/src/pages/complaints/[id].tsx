@@ -11,6 +11,7 @@ import {
   Flex,
   Heading,
   HStack,
+  Select,
   SimpleGrid,
   Text,
   VStack,
@@ -45,6 +46,8 @@ export default function CreateUser() {
       localStorage.setItem("@arbocontrol:id", id);
     }
   }, [data]);
+
+  console.log(status);
 
   async function submitStatus() {
     api.post('/update-status', {
@@ -203,25 +206,28 @@ export default function CreateUser() {
               />
             </SimpleGrid>
 
-            <SimpleGrid minChildWidth="240px" spacing={["6", "8"]} w="100%">
-              <Input
-                name="status"
-                label="Status"
-                value={status === 'pending' ? "Pendente" : "Finalizada"}
-                _disabled={{color: 'white'}}
-                isDisabled={true}
-                />
-            </SimpleGrid>
+            {status && (
+              <SimpleGrid minChildWidth="240px" spacing={["6", "8"]} w="100%">
+                <HStack>
+                  <Select placeholder="Selecione Status" onChange={(e) => setStatus(e.target.value)} defaultValue={status}>
+                    <option value="pending" style={{ color: 'white', backgroundColor: '#181B23'}}>Pendente</option>
+                    <option value="invalid" style={{ color: 'white', backgroundColor: '#181B23'}}>Solicitação Inválida</option>
+                    <option value="inAttendance" style={{ color: 'white', backgroundColor: '#181B23'}}>Em Atendimento</option>
+                    <option value="finished" style={{ color: 'white', backgroundColor: '#181B23'}}>Concluído</option>
+                  </Select>
+                </HStack>
+              </SimpleGrid>
+            )}
 
             <img src={data?.complaint?.image} alt="" />
           </VStack>
 
-          <Flex mt="8" justify={["center", "space-between"]}>
-            <HStack>
+          <Flex mt="8" justify={["center", "flex-end"]}>
+            {/* <HStack>
               {status === 'pending' ? 
               (<Button colorScheme="red" onClick={() => setStatus('finished')}>Finalizar</Button>) : 
               (<Button colorScheme="green" onClick={() => setStatus('pending')}>Reabrir</Button>)}
-            </HStack>
+            </HStack> */}
 
             <HStack spacing="4">
               <Link href="/complaints" passHref>

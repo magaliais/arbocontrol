@@ -77,12 +77,18 @@ export default function ComplaintsList() {
                 </Thead>
                 <Tbody>
                   {data.complaints.map(complaint => {
-                    return(
-                      <Tr key={complaint.id} _hover={{ cursor: 'pointer', color: 'green.500' }} onClick={() => router.push(`/complaints/${complaint.id}`)}>
+                    return (
+                      <Tr
+                        key={complaint.id}
+                        _hover={{ cursor: "pointer", color: "green.500" }}
+                        onClick={() =>
+                          router.push(`/complaints/${complaint.id}`)
+                        }
+                      >
                         <Td px={["4", "4", "6"]}>
                           <Box>
-                            <ChakraLink 
-                              // onMouseEnter={() => handlePrefetchComplaint(complaint.id)}
+                            <ChakraLink
+                            // onMouseEnter={() => handlePrefetchComplaint(complaint.id)}
                             >
                               <Text fontWeight="bold">{complaint.cep}</Text>
                             </ChakraLink>
@@ -92,9 +98,20 @@ export default function ComplaintsList() {
                           </Box>
                         </Td>
                         {isWideVersion && <Td>{complaint.createdAt}</Td>}
-                        {isWideVersion && <Td>{complaint.status === "finished" ? "Finalizada" : "Pendente"}</Td>}
+                        {isWideVersion && (
+                          <Td>
+                            {complaint.status === "finished"
+                              ? "Concluída"
+                              : complaint.status === "pending"
+                              ? "Pendente"
+                              : complaint.status === "invalid"
+                              ? "Inválida"
+                              : complaint.status === "inAttendance"
+                              && "Em atendimento"}
+                          </Td>
+                        )}
                       </Tr>
-                    )
+                    );
                   })}
                 </Tbody>
               </Table>
