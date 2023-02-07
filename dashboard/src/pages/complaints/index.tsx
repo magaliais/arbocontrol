@@ -1,10 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
-import { useComplaints } from "../../hooks/useComplaints";
+import { getComplaints, useComplaints } from "../../hooks/useComplaints";
 import { queryClient } from "../../services/queryClient";
 import { api } from '../../services/apiClient';
 
-import { Box, Button, Checkbox, Flex, Heading, Icon, Spinner, Table, Tbody, Td, Text, Th, Thead, Tr, useBreakpointValue, Link as ChakraLink, HStack } from "@chakra-ui/react";
+import { Box, Button, Checkbox, Flex, Heading, Icon, Spinner, Table, Tbody, Td, Text, Th, Thead, Tr, useBreakpointValue, Link as ChakraLink, HStack, Input, Select } from "@chakra-ui/react";
 import { Header } from "../../components/Header";
 import { Pagination } from "../../components/Pagination";
 import { Sidebar } from "../../components/Sidebar";
@@ -15,10 +15,11 @@ import { setupAPIClient } from "../../services/api";
 
 export default function ComplaintsList() {
   const [currentPage, setCurrentPage] = useState(1);
+  const [status, setStatus] = useState<string>('all');
   // const [isPendingActive, setIsPendingActive] = useState<boolean>(false);
   // const [isFinishedActive, setIsFinishedActive] = useState<boolean>(false);
 
-  const { data, isLoading, isFetching, error } = useComplaints(currentPage);
+  const { data, isLoading, isFetching, error } = useComplaints(currentPage, status);
 
   const isWideVersion = useBreakpointValue({
     base: false,
@@ -26,6 +27,13 @@ export default function ComplaintsList() {
   });
 
   const router = useRouter();
+
+  async function filterSearch() {
+    // const { data, isLoading, isFetching, error } = await useComplaints(currentPage, status);
+
+    console.log({ currentPage, status });
+    getComplaints(currentPage, status);
+  }
 
   // async function handlePrefetchComplaint(complaintId: string) {
   //   await queryClient.prefetchQuery(['complaint', complaintId], async () => {
@@ -44,20 +52,72 @@ export default function ComplaintsList() {
       <Flex w="100%" my="6" maxW={1480} mx="auto" px="6">
         <Sidebar />
 
-        <Box flex="1" borderRadius="8" bg="gray.800" p={["6", "8"]} overflowX="auto">
-          <Flex mb="8" justify="space-between" align="center">
+        <Box
+          flex="1"
+          borderRadius="8"
+          bg="gray.800"
+          p={["6", "8"]}
+          overflowX="auto"
+        >
+          <Flex mb="8" justify="space-between" align={{ lg: "center", md: "start" }} direction={{ lg: "row", md: "column" }}>
             <Heading size="lg" fontWeight="normal">
               Denúncias
-              { !isLoading && isFetching && <Spinner size="sm" color="gray.500" ml="4" /> }
+              {!isLoading && isFetching && (
+                <Spinner size="sm" color="gray.500" ml="4" />
+              )}
             </Heading>
 
-            {/* <HStack spacing="6">
-              <Button colorScheme='green'>Pendentes</Button>
-              <Button colorScheme='green'>Finalizadas</Button>
-            </HStack> */}
+            <HStack spacing="4">
+              <Select
+                placeholder="Status"
+                onChange={(e) => setStatus(e.target.value)}
+                defaultValue={status}
+              >
+                <option
+                  value="all"
+                  style={{ color: "white", backgroundColor: "#181B23" }}
+                >
+                  Todos
+                </option>
+                <option
+                  value="pending"
+                  style={{ color: "white", backgroundColor: "#181B23" }}
+                >
+                  Pendente
+                </option>
+                <option
+                  value="invalid"
+                  style={{ color: "white", backgroundColor: "#181B23" }}
+                >
+                  Solicitação Inválida
+                </option>
+                <option
+                  value="inAttendance"
+                  style={{ color: "white", backgroundColor: "#181B23" }}
+                >
+                  Em Atendimento
+                </option>
+                <option
+                  value="finished"
+                  style={{ color: "white", backgroundColor: "#181B23" }}
+                >
+                  Concluído
+                </option>
+              </Select>
+              <Input placeholder="Id da denúncia" />
+              <Button
+                type="submit"
+                colorScheme="green"
+                onClick={filterSearch}
+                isLoading={isLoading}
+                px="6"
+              >
+                Buscar
+              </Button>
+            </HStack>
           </Flex>
 
-          { isLoading ? (
+          {isLoading ? (
             <Flex justify="center">
               <Spinner />
             </Flex>
@@ -76,7 +136,7 @@ export default function ComplaintsList() {
                   </Tr>
                 </Thead>
                 <Tbody>
-                  {data.complaints.map(complaint => {
+                  {data.complaints.map((complaint) => {
                     return (
                       <Tr
                         key={complaint.id}
@@ -106,8 +166,8 @@ export default function ComplaintsList() {
                               ? "Pendente"
                               : complaint.status === "invalid"
                               ? "Inválida"
-                              : complaint.status === "inAttendance"
-                              && "Em atendimento"}
+                              : complaint.status === "inAttendance" &&
+                                "Em atendimento"}
                           </Td>
                         )}
                       </Tr>
@@ -116,7 +176,7 @@ export default function ComplaintsList() {
                 </Tbody>
               </Table>
 
-              <Pagination 
+              <Pagination
                 totalCountOfRegisters={data.totalCount}
                 currentPage={currentPage}
                 onPageChange={setCurrentPage}

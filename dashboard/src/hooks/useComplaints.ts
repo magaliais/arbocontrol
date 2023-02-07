@@ -24,10 +24,11 @@ type GetComplaintsResponse = {
   totalCount: number;
 };
 
-export async function getComplaints(currentPage: number): Promise<GetComplaintsResponse> {
+export async function getComplaints(currentPage: number, status: string): Promise<GetComplaintsResponse> {
   const { data } = await api.get("complaints", {
     params: {
       currentPage,
+      status,
     },
   });
 
@@ -63,8 +64,8 @@ export async function getComplaints(currentPage: number): Promise<GetComplaintsR
   };
 }
 
-export function useComplaints(currentPage: number) {
-  return useQuery(["complaints", currentPage], () => getComplaints(currentPage), {
+export function useComplaints(currentPage: number, status: string) {
+  return useQuery(["complaints", currentPage], () => getComplaints(currentPage, status), {
     staleTime: 1000 * 5, // 5 seconds
   });
 }
