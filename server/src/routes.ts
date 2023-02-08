@@ -1,5 +1,5 @@
 import express from "express";
-import cors from 'cors';
+import cors from "cors";
 import { CreateComplaintController } from "./use-cases/createComplaint/createComplaintController";
 import { GetComplaintsController } from "./use-cases/getComplaints/getComplaintsController";
 import { GetComplaintsStatusController } from "./use-cases/getComplaintsStatus/getComplaintsStatusController";
@@ -17,11 +17,11 @@ export const routes = express.Router();
 // * Configuração para permitir a requisição 'preflight'
 routes.options("*", cors());
 
-routes.get("/", (req, res) => { 
-  res.status(200).send("Ok")
+routes.get("/", (req, res) => {
+  res.status(200).send("Ok");
 });
 
-routes.post("/complaint", (req, res) => { 
+routes.post("/complaint", (req, res) => {
   console.log("⚡️ [server]: POST /complaint");
 
   // * Permite que a URL de produção faça esta requisição
@@ -36,7 +36,7 @@ routes.post("/complaint", (req, res) => {
   }
 });
 
-routes.get("/complaints", (req, res) => { 
+routes.get("/complaints", (req, res) => {
   console.log("⚡️ [server]: GET /complaints");
 
   // * Permite que a URL de produção faça esta requisição
@@ -51,7 +51,7 @@ routes.get("/complaints", (req, res) => {
   }
 });
 
-routes.get("/complaints/:id", (req, res) => { 
+routes.get("/complaints/:id", (req, res) => {
   console.log(`⚡️ [server]: GET /complaints/${req.params.id}`);
 
   // * Permite que a URL de produção faça esta requisição
@@ -66,8 +66,10 @@ routes.get("/complaints/:id", (req, res) => {
   }
 });
 
-routes.post("/update-status", (req, res) => { 
-  console.log(`⚡️ [server]: POST /update-status/${req.body.id} => ${req.body.status}`);
+routes.post("/update-status", (req, res) => {
+  console.log(
+    `⚡️ [server]: POST /update-status/${req.body.id} => ${req.body.status}`
+  );
 
   // * Permite que a URL de produção faça esta requisição
   res.header("Access-Control-Allow-Origin", "http://localhost:3000");
@@ -81,9 +83,9 @@ routes.post("/update-status", (req, res) => {
   }
 });
 
-routes.get("/dashboard", (req, res) => { 
+routes.get("/dashboard", (req, res) => {
   console.log("⚡️ [server]: GET /dashboard");
-  
+
   // * Permite que a URL de produção faça esta requisição
   res.header("Access-Control-Allow-Origin", "http://localhost:3000");
 
@@ -96,7 +98,7 @@ routes.get("/dashboard", (req, res) => {
   }
 });
 
-routes.post('/sessions', (req, res) => {
+routes.post("/sessions", (req, res) => {
   console.log("⚡️ [server]: POST /sessions");
 
   // * Permite que a URL de produção faça esta requisição
@@ -121,7 +123,7 @@ routes.post('/sessions', (req, res) => {
       message: "Senha incorreta",
     });
   }
-})
+});
 
 routes.get("/me", (req, res) => {
   const email = req;
@@ -146,7 +148,7 @@ routes.get("/me", (req, res) => {
 });
 
 // TODO rota para criar usuário
-// routes.post("/user", (req, res) => { 
+// routes.post("/user", (req, res) => {
 //   console.log("⚡️ [server]: POST /user");
 
 //   // * Permite que a URL de produção faça esta requisição
