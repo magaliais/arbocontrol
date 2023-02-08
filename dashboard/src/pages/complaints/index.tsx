@@ -2,9 +2,29 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { getComplaints, useComplaints } from "../../hooks/useComplaints";
 import { queryClient } from "../../services/queryClient";
-import { api } from '../../services/apiClient';
+import { api } from "../../services/apiClient";
 
-import { Box, Button, Checkbox, Flex, Heading, Icon, Spinner, Table, Tbody, Td, Text, Th, Thead, Tr, useBreakpointValue, Link as ChakraLink, HStack, Input, Select } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Checkbox,
+  Flex,
+  Heading,
+  Icon,
+  Spinner,
+  Table,
+  Tbody,
+  Td,
+  Text,
+  Th,
+  Thead,
+  Tr,
+  useBreakpointValue,
+  Link as ChakraLink,
+  HStack,
+  Input,
+  Select,
+} from "@chakra-ui/react";
 import { Header } from "../../components/Header";
 import { Pagination } from "../../components/Pagination";
 import { Sidebar } from "../../components/Sidebar";
@@ -15,11 +35,12 @@ import { setupAPIClient } from "../../services/api";
 
 export default function ComplaintsList() {
   const [currentPage, setCurrentPage] = useState(1);
-  const [status, setStatus] = useState<string>('all');
-  // const [isPendingActive, setIsPendingActive] = useState<boolean>(false);
-  // const [isFinishedActive, setIsFinishedActive] = useState<boolean>(false);
+  const [status, setStatus] = useState<string>("all");
 
-  const { data, isLoading, isFetching, error } = useComplaints(currentPage, status);
+  const { data, isLoading, isFetching, error } = useComplaints(
+    currentPage,
+    status
+  );
 
   const isWideVersion = useBreakpointValue({
     base: false,
@@ -27,13 +48,6 @@ export default function ComplaintsList() {
   });
 
   const router = useRouter();
-
-  async function filterSearch() {
-    // const { data, isLoading, isFetching, error } = await useComplaints(currentPage, status);
-
-    console.log({ currentPage, status });
-    getComplaints(currentPage, status);
-  }
 
   // async function handlePrefetchComplaint(complaintId: string) {
   //   await queryClient.prefetchQuery(['complaint', complaintId], async () => {
@@ -59,7 +73,12 @@ export default function ComplaintsList() {
           p={["6", "8"]}
           overflowX="auto"
         >
-          <Flex mb="8" justify="space-between" align={{ lg: "center", md: "start" }} direction={{ lg: "row", md: "column" }}>
+          <Flex
+            mb="8"
+            justify="space-between"
+            align={{ lg: "center", md: "start" }}
+            direction={{ lg: "row", md: "column" }}
+          >
             <Heading size="lg" fontWeight="normal">
               Denúncias
               {!isLoading && isFetching && (
@@ -70,7 +89,9 @@ export default function ComplaintsList() {
             <HStack spacing="4">
               <Select
                 placeholder="Status"
-                onChange={(e) => setStatus(e.target.value)}
+                onChange={(e) => {
+                  setStatus(e.target.value);
+                }}
                 defaultValue={status}
               >
                 <option
@@ -108,7 +129,6 @@ export default function ComplaintsList() {
               <Button
                 type="submit"
                 colorScheme="green"
-                onClick={filterSearch}
                 isLoading={isLoading}
                 px="6"
               >
