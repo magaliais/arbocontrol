@@ -1,7 +1,6 @@
-import React from 'react'
 import * as S from './styles';
 
-import Fade from 'react-reveal';
+import Fade from 'react-reveal/Fade';
 
 import AccordionGroup from '../AccordionGroup';
 
