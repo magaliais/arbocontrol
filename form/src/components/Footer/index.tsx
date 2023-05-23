@@ -1,10 +1,7 @@
 import { Clock, Phone, EnvelopeSimple, MapTrifold } from "phosphor-react";
-import React from "react";
 import * as S from "./styles";
-
 import pjfLogo from "/src/assets/images/logo-pjf.png";
-import arbocontrol from "/src/assets/images/arbocontrol.png";
-import Fade from "react-reveal";
+import Fade from "react-reveal/Fade";
 
 export default function Footer() {
   return (
