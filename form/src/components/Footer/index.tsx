@@ -48,7 +48,6 @@ export default function Footer() {
 
         <S.Logos>
           <img src={pjfLogo} alt="" />
-          <img src={arbocontrol} alt="" />
         </S.Logos>
       </S.Content>
     </S.Container>

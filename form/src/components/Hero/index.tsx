@@ -1,7 +1,6 @@
 import * as S from './styles'
 
 import pjfLogo from '/src/assets/images/logo-pjf.png'
-import arbocontrol from '/src/assets/images/arbocontrol.png';
 import bgVideo from '/src/assets/videos/bg-video.mp4';
 
 export default function Hero() {
@@ -13,7 +12,6 @@ export default function Hero() {
       <div className="content">
         <div className="images">
           <img src={pjfLogo} alt="" />
-          <img src={arbocontrol} alt="" />
         </div>
         <header>
           <h2>
