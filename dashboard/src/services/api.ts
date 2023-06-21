@@ -15,7 +15,7 @@ export function setupAPIClient(ctx = undefined) {
   }
 
   const api = axios.create({
-    baseURL: "http://localhost:3333",
+    baseURL: process.env.NEXT_PUBLIC_BASE_URL,
     headers: {
       // Caso seja a primeira vez e o usuário não esteja logado, o valor será undefined.
       // Por isso, no AuthContext, é necessário atualizar o token do header quando o
