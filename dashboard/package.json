@@ -32,6 +32,7 @@
     "@faker-js/faker": "^7.5.0",
     "@types/faker": "^6.6.9",
     "@types/node": "^18.7.15",
+    "@types/nookies": "^2.0.3",
     "@types/react": "^18.0.18",
     "eslint": "8.23.0",
     "eslint-config-next": "12.2.5",

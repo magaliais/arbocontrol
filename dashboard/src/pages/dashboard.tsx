@@ -1,13 +1,13 @@
-import React, { useEffect } from 'react'
-import dynamic from 'next/dynamic';
-import { Box, Flex, SimpleGrid, Spinner, Text, theme } from '@chakra-ui/react'
-import { Header } from '../components/Header'
-import { Sidebar } from '../components/Sidebar';
-import { useComplaintsStatus } from '../hooks/useComplaintsStatus';
-import { useAuth } from '../contexts/AuthContext';
-import { api } from '../services/apiClient';
-import { withSSRAuth } from '../utils/withSSRAuth';
-import { setupAPIClient } from '../services/api';
+import React, { useEffect } from "react";
+import dynamic from "next/dynamic";
+import { Box, Flex, SimpleGrid, Spinner, Text, theme } from "@chakra-ui/react";
+import { Header } from "../components/Header";
+import { Sidebar } from "../components/Sidebar";
+import { useComplaintsStatus } from "../hooks/useComplaintsStatus";
+import { useAuth } from "../contexts/AuthContext";
+import { api } from "../services/apiClient";
+import { withSSRAuth } from "../utils/withSSRAuth";
+import { setupAPIClient } from "../services/api";
 
 export default function Dashboard() {
   const { user, signOut } = useAuth();
@@ -15,10 +15,7 @@ export default function Dashboard() {
   const { data, isLoading, isFetching, error } = useComplaintsStatus();
 
   useEffect(() => {
-    api.get("/me", {params: {
-      
-    }})
-      .then((response) => console.log(response));
+    api.get("/me", { params: {} }).then((response) => console.log(response));
   }, []);
 
   return (

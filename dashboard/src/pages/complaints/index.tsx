@@ -3,6 +3,8 @@ import Link from "next/link";
 import { getComplaints, useComplaints } from "../../hooks/useComplaints";
 import { queryClient } from "../../services/queryClient";
 import { api } from "../../services/apiClient";
+import neighborhoods from "../../mocks/neighborhoods";
+import statusOptions from "../../mocks/statusOptions";
 
 import {
   Box,
@@ -24,11 +26,11 @@ import {
   HStack,
   Input,
   Select,
+  Stack,
 } from "@chakra-ui/react";
 import { Header } from "../../components/Header";
 import { Pagination } from "../../components/Pagination";
 import { Sidebar } from "../../components/Sidebar";
-import { RiAddLine, RiPencilLine } from "react-icons/ri";
 import { useRouter } from "next/router";
 import { withSSRAuth } from "../../utils/withSSRAuth";
 import { setupAPIClient } from "../../services/api";
@@ -36,10 +38,12 @@ import { setupAPIClient } from "../../services/api";
 export default function ComplaintsList() {
   const [currentPage, setCurrentPage] = useState(1);
   const [status, setStatus] = useState<string>("all");
+  const [neighborhood, setNeighborhood] = useState<string>("all");
 
   const { data, isLoading, isFetching, error } = useComplaints(
     currentPage,
-    status
+    status,
+    neighborhood
   );
 
   const isWideVersion = useBreakpointValue({
@@ -73,68 +77,81 @@ export default function ComplaintsList() {
           p={["6", "8"]}
           overflowX="auto"
         >
-          <Flex
-            mb="8"
-            justify="space-between"
-            align={{ lg: "center", md: "start" }}
-            direction={{ lg: "row", md: "column" }}
-          >
-            <Heading size="lg" fontWeight="normal">
+          <Flex mb="8" justify="space-between" align="start" direction="column">
+            <Heading size="lg" fontWeight="normal" mb="6">
               Denúncias
               {!isLoading && isFetching && (
                 <Spinner size="sm" color="gray.500" ml="4" />
               )}
             </Heading>
 
-            <HStack spacing="4">
-              <Select
-                placeholder="Status"
-                onChange={(e) => {
-                  setStatus(e.target.value);
-                }}
-                defaultValue={status}
-              >
-                <option
-                  value="all"
-                  style={{ color: "white", backgroundColor: "#181B23" }}
+            <Flex w="full">
+              <HStack>
+                <Stack>
+                  <label htmlFor="neighborhood">Bairro</label>
+                  <Select
+                    id="neighborhood"
+                    onChange={(e) => {
+                      setNeighborhood(e.target.value);
+                    }}
+                    defaultValue={neighborhood}
+                  >
+                    <option
+                      value="all"
+                      style={{ color: "white", backgroundColor: "#181B23" }}
+                    >
+                      Todos
+                    </option>
+                    {neighborhoods.map((hit) => (
+                      <option
+                        value={hit.id}
+                        style={{ color: "white", backgroundColor: "#181B23" }}
+                        key={hit.id}
+                      >
+                        {hit.name}
+                      </option>
+                    ))}
+                  </Select>
+                </Stack>
+                <Stack>
+                  <label htmlFor="status">Status</label>
+                  <Select
+                    id="status"
+                    onChange={(e) => {
+                      setStatus(e.target.value);
+                    }}
+                    defaultValue={status}
+                  >
+                    <option
+                      value="all"
+                      style={{ color: "white", backgroundColor: "#181B23" }}
+                    >
+                      Todos
+                    </option>
+                    {statusOptions.map((hit) => (
+                      <option
+                        value={hit.id}
+                        style={{ color: "white", backgroundColor: "#181B23" }}
+                        key={hit.id}
+                      >
+                        {hit.name}
+                      </option>
+                    ))}
+                  </Select>
+                </Stack>
+              </HStack>
+              <HStack ml="auto" mt="auto">
+                <Input placeholder="Id da denúncia" />
+                <Button
+                  type="submit"
+                  colorScheme="green"
+                  isLoading={isLoading}
+                  px="6"
                 >
-                  Todos
-                </option>
-                <option
-                  value="pending"
-                  style={{ color: "white", backgroundColor: "#181B23" }}
-                >
-                  Pendente
-                </option>
-                <option
-                  value="invalid"
-                  style={{ color: "white", backgroundColor: "#181B23" }}
-                >
-                  Solicitação Inválida
-                </option>
-                <option
-                  value="inAttendance"
-                  style={{ color: "white", backgroundColor: "#181B23" }}
-                >
-                  Em Atendimento
-                </option>
-                <option
-                  value="finished"
-                  style={{ color: "white", backgroundColor: "#181B23" }}
-                >
-                  Concluído
-                </option>
-              </Select>
-              <Input placeholder="Id da denúncia" />
-              <Button
-                type="submit"
-                colorScheme="green"
-                isLoading={isLoading}
-                px="6"
-              >
-                Buscar
-              </Button>
-            </HStack>
+                  Buscar
+                </Button>
+              </HStack>
+            </Flex>
           </Flex>
 
           {isLoading ? (

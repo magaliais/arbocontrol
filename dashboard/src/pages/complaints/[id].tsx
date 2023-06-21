@@ -1,9 +1,4 @@
 import Link from "next/link";
-import * as yup from "yup";
-import { SubmitHandler, useForm } from "react-hook-form";
-import { queryClient } from "../../services/queryClient";
-import { useMutation } from "@tanstack/react-query";
-
 import {
   Box,
   Button,
@@ -16,14 +11,14 @@ import {
   Text,
   VStack,
 } from "@chakra-ui/react";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { Input } from "../../components/Form/Input";
+import Input from "../../components/Form/Input";
 import { Header } from "../../components/Header";
 import { Sidebar } from "../../components/Sidebar";
 import { api } from "../../services/apiClient";
 import { useRouter } from "next/router";
 import { useComplaint } from "../../hooks/useComplaint";
 import { useEffect, useState } from "react";
+import statusOptions from "../../mocks/statusOptions";
 
 type CreateUserFormData = {
   name: string;
@@ -33,16 +28,16 @@ type CreateUserFormData = {
 };
 
 export default function CreateUser() {
-  const [status, setStatus] = useState<string>('');
+  const [status, setStatus] = useState<string>("");
 
   const router = useRouter();
   const { id } = router.query;
-  
+
   const { data, isLoading, isFetching, error } = useComplaint(id);
 
   useEffect(() => {
     setStatus(data?.complaint?.status);
-    if(typeof id === 'string') {
+    if (typeof id === "string") {
       localStorage.setItem("@arbocontrol:id", id);
     }
   }, [data]);
@@ -50,10 +45,10 @@ export default function CreateUser() {
   console.log(status);
 
   async function submitStatus() {
-    api.post('/update-status', {
+    api.post("/update-status", {
       id: id,
       status: status,
-    })
+    });
   }
 
   return (
@@ -63,18 +58,16 @@ export default function CreateUser() {
       <Flex w="100%" my="6" maxW={1480} mx="auto" px="6">
         <Sidebar />
 
-        <Box
-          as="form"
-          flex="1"
-          borderRadius="8"
-          bg="gray.800"
-          p={["6", "8"]}
-        >
-          <Heading size="lg" fontWeight="normal" onClick={async () => {
-            if(typeof id === 'string') {
-              await navigator.clipboard.writeText(id);
-            }
-          }}>
+        <Box as="form" flex="1" borderRadius="8" bg="gray.800" p={["6", "8"]}>
+          <Heading
+            size="lg"
+            fontWeight="normal"
+            onClick={async () => {
+              if (typeof id === "string") {
+                await navigator.clipboard.writeText(id);
+              }
+            }}
+          >
             Denúncia {id}
           </Heading>
 
@@ -109,14 +102,14 @@ export default function CreateUser() {
                 name="cep"
                 label="CEP"
                 value={data?.complaint?.cep}
-                _disabled={{color: 'white'}}
+                _disabled={{ color: "white" }}
                 isDisabled={true}
-                />
+              />
               <Input
                 name="street"
                 label="Rua"
                 value={data?.complaint?.street}
-                _disabled={{color: 'white'}}
+                _disabled={{ color: "white" }}
                 isDisabled={true}
               />
             </SimpleGrid>
@@ -126,14 +119,14 @@ export default function CreateUser() {
                 name="neighborhood"
                 label="Bairro"
                 value={data?.complaint?.neighborhood}
-                _disabled={{color: 'white'}}
+                _disabled={{ color: "white" }}
                 isDisabled={true}
-                />
+              />
               <Input
                 name="houseNumber"
                 label="Número"
                 value={data?.complaint?.houseNumber}
-                _disabled={{color: 'white'}}
+                _disabled={{ color: "white" }}
                 isDisabled={true}
               />
             </SimpleGrid>
@@ -143,14 +136,14 @@ export default function CreateUser() {
                 name="complement"
                 label="Complemento"
                 value={data?.complaint?.complement}
-                _disabled={{color: 'white'}}
+                _disabled={{ color: "white" }}
                 isDisabled={true}
-                />
+              />
               <Input
                 name="reference"
                 label="Referência"
                 value={data?.complaint?.reference}
-                _disabled={{color: 'white'}}
+                _disabled={{ color: "white" }}
                 isDisabled={true}
               />
             </SimpleGrid>
@@ -160,14 +153,14 @@ export default function CreateUser() {
                 name="cellphoneNumber"
                 label="Número de celular"
                 value={data?.complaint?.cellphoneNumber}
-                _disabled={{color: 'white'}}
+                _disabled={{ color: "white" }}
                 isDisabled={true}
-                />
+              />
               <Input
                 name="phoneNumber"
                 label="Número de telefone"
                 value={data?.complaint?.phoneNumber}
-                _disabled={{color: 'white'}}
+                _disabled={{ color: "white" }}
                 isDisabled={true}
               />
             </SimpleGrid>
@@ -177,14 +170,14 @@ export default function CreateUser() {
                 name="email"
                 label="Email"
                 value={data?.complaint?.email}
-                _disabled={{color: 'white'}}
+                _disabled={{ color: "white" }}
                 isDisabled={true}
-                />
+              />
               <Input
                 name="notes"
                 label="Observações"
                 value={data?.complaint?.notes}
-                _disabled={{color: 'white'}}
+                _disabled={{ color: "white" }}
                 isDisabled={true}
               />
             </SimpleGrid>
@@ -194,14 +187,14 @@ export default function CreateUser() {
                 name="createdAt"
                 label="Data da criação"
                 value={data?.complaint?.createdAt}
-                _disabled={{color: 'white'}}
+                _disabled={{ color: "white" }}
                 isDisabled={true}
-                />
+              />
               <Input
                 name="updatedAt"
                 label="Data da última atualização"
                 value={data?.complaint?.updatedAt}
-                _disabled={{color: 'white'}}
+                _disabled={{ color: "white" }}
                 isDisabled={true}
               />
             </SimpleGrid>
@@ -209,11 +202,16 @@ export default function CreateUser() {
             {status && (
               <SimpleGrid minChildWidth="240px" spacing={["6", "8"]} w="100%">
                 <HStack>
-                  <Select placeholder="Selecione Status" onChange={(e) => setStatus(e.target.value)} defaultValue={status}>
-                    <option value="pending" style={{ color: 'white', backgroundColor: '#181B23'}}>Pendente</option>
-                    <option value="invalid" style={{ color: 'white', backgroundColor: '#181B23'}}>Solicitação Inválida</option>
-                    <option value="inAttendance" style={{ color: 'white', backgroundColor: '#181B23'}}>Em Atendimento</option>
-                    <option value="finished" style={{ color: 'white', backgroundColor: '#181B23'}}>Concluído</option>
+                  <Select onChange={(e) => setStatus(e.target.value)}>
+                    {statusOptions.map((hit) => (
+                      <option
+                        value={hit.id}
+                        style={{ color: "white", backgroundColor: "#181B23" }}
+                        key={hit.id}
+                      >
+                        {hit.name}
+                      </option>
+                    ))}
                   </Select>
                 </HStack>
               </SimpleGrid>

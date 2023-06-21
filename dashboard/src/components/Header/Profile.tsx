@@ -9,9 +9,9 @@ export function Profile({ showProfileData }: ProfileProps) {
     <Flex align="center">
       {showProfileData && (
         <Box mr="4" textAlign="right">
-          <Text>Gabriel Magalhães</Text>
+          <Text>Prefeitura de Juiz de Fora</Text>
           <Text color="gray.300" fontSize="small">
-            gabriel.ashm@hotmail.com
+            pjf@gmail.com
           </Text>
         </Box>
       )}
@@ -19,7 +19,7 @@ export function Profile({ showProfileData }: ProfileProps) {
       <Avatar
         size="md"
         name="Gabriel Magalhães"
-        src="https://github.com/magaliais.png"
+        src="https://assets.infra.grancursosonline.com.br/projeto/thumbnail-carrossel/prefeitura-de-juiz-de-fora-mg.png"
       />
     </Flex>
   );

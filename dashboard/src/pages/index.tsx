@@ -2,7 +2,7 @@ import { Button, Flex, Stack, FormLabel, FormControl } from "@chakra-ui/react";
 import { useForm, SubmitHandler } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup'
-import { Input } from "../components/Form/Input";
+import Input from "../components/Form/Input";
 import { useAuth } from "../contexts/AuthContext";
 import { withSSRGuest } from "../utils/withSSRGuest";
 

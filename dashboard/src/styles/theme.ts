@@ -34,6 +34,6 @@ const theme = extendTheme({
     heading: "Roboto",
     body: "Roboto",
   },
-} as Theme | {});
+});
 
 export default theme;
