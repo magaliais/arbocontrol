@@ -26,6 +26,7 @@ routes.post("/complaint", (req, res) => {
 
   // * Permite que a URL de produção faça esta requisição
   res.header("Access-Control-Allow-Origin", "http://localhost:3000");
+  res.header("Access-Control-Allow-Origin", "https://arbocontrol-dashboard-38zpvm68v-magaliais.vercel.app");
 
   try {
     const response = createComplaintController.handle(req, res);
@@ -41,6 +42,7 @@ routes.get("/complaints", (req, res) => {
 
   // * Permite que a URL de produção faça esta requisição
   res.header("Access-Control-Allow-Origin", "http://localhost:3000");
+  res.header("Access-Control-Allow-Origin", "https://arbocontrol-dashboard-38zpvm68v-magaliais.vercel.app");
 
   try {
     const response = getComplaintsController.handle(req, res);
@@ -56,6 +58,7 @@ routes.get("/complaints/:id", (req, res) => {
 
   // * Permite que a URL de produção faça esta requisição
   res.header("Access-Control-Allow-Origin", "http://localhost:3000");
+  res.header("Access-Control-Allow-Origin", "https://arbocontrol-dashboard-38zpvm68v-magaliais.vercel.app");
 
   try {
     const response = getComplaintController.handle(req, res);
@@ -73,6 +76,7 @@ routes.post("/update-status", (req, res) => {
 
   // * Permite que a URL de produção faça esta requisição
   res.header("Access-Control-Allow-Origin", "http://localhost:3000");
+  res.header("Access-Control-Allow-Origin", "https://arbocontrol-dashboard-38zpvm68v-magaliais.vercel.app");
 
   try {
     const response = updateStatusController.handle(req, res);
@@ -88,6 +92,7 @@ routes.get("/dashboard", (req, res) => {
 
   // * Permite que a URL de produção faça esta requisição
   res.header("Access-Control-Allow-Origin", "http://localhost:3000");
+  res.header("Access-Control-Allow-Origin", "https://arbocontrol-dashboard-38zpvm68v-magaliais.vercel.app");
 
   try {
     const response = getComplaintsStatusController.handle(req, res);
@@ -103,6 +108,7 @@ routes.post("/sessions", (req, res) => {
 
   // * Permite que a URL de produção faça esta requisição
   res.header("Access-Control-Allow-Origin", "http://localhost:3000");
+  res.header("Access-Control-Allow-Origin", "https://arbocontrol-dashboard-38zpvm68v-magaliais.vercel.app");
 
   const { email, password } = req.body as {
     email: string;
@@ -130,6 +136,7 @@ routes.get("/me", (req, res) => {
 
   // * Permite que a URL de produção faça esta requisição
   res.header("Access-Control-Allow-Origin", "http://localhost:3000");
+  res.header("Access-Control-Allow-Origin", "https://arbocontrol-dashboard-38zpvm68v-magaliais.vercel.app");
 
   // ? verifica se o usuário existe no banco
   // const user = users.get(email);
@@ -153,6 +160,7 @@ routes.get("/me", (req, res) => {
 
 //   // * Permite que a URL de produção faça esta requisição
 //   res.header("Access-Control-Allow-Origin", "http://localhost:3000");
+//   res.header("Access-Control-Allow-Origin", "https://arbocontrol-dashboard-38zpvm68v-magaliais.vercel.app");
 
 //   try {
 //     const response = createUserController.handle(req, res);
