@@ -2,7 +2,16 @@ import { Complaint } from "@prisma/client";
 import { prisma } from "../../prisma/client";
 
 export class GetComplaintsUseCase {
-  async execute(status: string, neighborhood: string): Promise<Complaint[]> {
+  async execute(status: string, neighborhood: string, id: string | null): Promise<Complaint[]> {
+    if(id !== 'null' && id !== null) {
+      const complaint = await prisma.complaint.findMany({
+        where: {
+          id: id,
+        }
+      })
+      return complaint;
+    }
+
     if (status === "all" && neighborhood === "all") {
       const complaints = await prisma.complaint.findMany({
         orderBy: [

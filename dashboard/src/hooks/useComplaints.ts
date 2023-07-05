@@ -27,13 +27,15 @@ type GetComplaintsResponse = {
 export async function getComplaints(
   currentPage: number,
   status: string,
-  neighborhood: string
+  neighborhood: string,
+  id: string,
 ): Promise<GetComplaintsResponse> {
   const { data } = await api.get("complaints", {
     params: {
       currentPage,
       status,
       neighborhood,
+      id,
     },
   });
 
@@ -72,11 +74,12 @@ export async function getComplaints(
 export function useComplaints(
   currentPage: number,
   status: string,
-  neighborhood: string
+  neighborhood: string,
+  id: string,
 ) {
   return useQuery(
     ["complaints", status, neighborhood, currentPage],
-    () => getComplaints(currentPage, status, neighborhood),
+    () => getComplaints(currentPage, status, neighborhood, id),
     {
       staleTime: 1000 * 5, // 5 seconds
     }

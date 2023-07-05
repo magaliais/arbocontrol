@@ -42,8 +42,6 @@ export default function CreateUser() {
     }
   }, [data]);
 
-  console.log(status);
-
   async function submitStatus() {
     api.post("/update-status", {
       id: id,

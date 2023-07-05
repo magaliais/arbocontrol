@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { getComplaints, useComplaints } from "../../hooks/useComplaints";
-import { queryClient } from "../../services/queryClient";
-import { api } from "../../services/apiClient";
 import neighborhoods from "../../mocks/neighborhoods";
 import statusOptions from "../../mocks/statusOptions";
 
@@ -39,11 +37,13 @@ export default function ComplaintsList() {
   const [currentPage, setCurrentPage] = useState(1);
   const [status, setStatus] = useState<string>("all");
   const [neighborhood, setNeighborhood] = useState<string>("all");
+  const [id, setId] = useState<string | null>(null);
 
-  const { data, isLoading, isFetching, error } = useComplaints(
+  const { data, isLoading, isFetching, error, refetch: refetchData } = useComplaints(
     currentPage,
     status,
-    neighborhood
+    neighborhood,
+    id,
   );
 
   const isWideVersion = useBreakpointValue({
@@ -141,11 +141,12 @@ export default function ComplaintsList() {
                 </Stack>
               </HStack>
               <HStack ml="auto" mt="auto">
-                <Input placeholder="Id da denúncia" />
+                <Input placeholder="Id da denúncia" onChange={(e) => setId(e.target.value)} />
                 <Button
                   type="submit"
                   colorScheme="green"
                   isLoading={isLoading}
+                  onClick={() => refetchData()}
                   px="6"
                 >
                   Buscar
@@ -228,9 +229,7 @@ export default function ComplaintsList() {
 
 export const getServerSideProps = withSSRAuth(async (ctx) => {
   const apiClient = setupAPIClient(ctx);
-  const response = await apiClient.get("/me");
-
-  console.log(response.data);
+  // const response = await apiClient.get("/me");
 
   return {
     props: {},

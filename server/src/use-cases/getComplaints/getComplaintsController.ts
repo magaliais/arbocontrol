@@ -7,7 +7,8 @@ export class GetComplaintsController {
 
     const result = await getComplaintsUseCase.execute(
       String(req.query.status),
-      String(req.query.neighborhood)
+      String(req.query.neighborhood),
+      String(req.query.id ?? 'null')
     );
 
     const { currentPage = 1, per_page = 10 } = req.query;
