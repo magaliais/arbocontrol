@@ -5,9 +5,12 @@ export class GetComplaintsController {
   async handle(req: Request, res: Response) {
     const getComplaintsUseCase = new GetComplaintsUseCase();
 
-    const result = await getComplaintsUseCase.execute(String(req.query.status));
+    const result = await getComplaintsUseCase.execute(
+      String(req.query.status),
+      String(req.query.neighborhood)
+    );
 
-    const { currentPage, per_page = 10 } = req.query;
+    const { currentPage = 1, per_page = 10 } = req.query;
     const totalCount = result.length;
     const pageStart = (Number(currentPage) - 1) * Number(per_page);
     const pageEnd = pageStart + Number(per_page);
