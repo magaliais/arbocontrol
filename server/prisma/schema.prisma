@@ -2,12 +2,13 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider = "prisma-client-js"
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "debian-openssl-1.1.x"]
 }
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  url      = "postgres://10855854685:rDMB9fecj4iQ@ep-divine-river-801745.us-east-2.aws.neon.tech/arbocontrol?pgbouncer=true&connect_timeout=10"
 }
 
 model Complaint {
