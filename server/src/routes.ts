@@ -116,12 +116,12 @@ routes.post("/sessions", (req, res) => {
   };
 
   // TODO verificação das credenciais
-  if (email === "gabriel.ashm@hotmail.com") {
+  if (email === "pjf@gmail.com") {
     if (password === "123123123") {
       return res.json({
         token: "testToken",
         refreshToken: "testRefreshToken",
-        name: "Gabriel Albuquerque",
+        name: "Prefeitura de Juiz de Fora",
       });
     }
     return res.status(401).json({
@@ -149,8 +149,8 @@ routes.get("/me", (req, res) => {
   // }
 
   return res.json({
-    email: "gabriel.ashm@hotmail.com",
-    name: "Gabriel Albuquerque Magalhães",
+    email: "pjf@gmail.com",
+    name: "Prefeitura de Juiz de Fora",
   });
 });
 
