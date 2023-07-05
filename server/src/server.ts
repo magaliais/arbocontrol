@@ -7,8 +7,8 @@ const app: Express = express();
 
 // MIDDLEWARES
 app.use(express.json({limit: '5mb'}));
-app.use(routes);
 app.use(cors());
+app.use(routes);
 
 const port = process.env.PORT || 8080;
 

@@ -25,8 +25,8 @@ routes.post("/complaint", (req, res) => {
   console.log("⚡️ [server]: POST /complaint");
 
   // * Permite que a URL de produção faça esta requisição
-  res.header("Access-Control-Allow-Origin", "http://localhost:3000");
-  res.header("Access-Control-Allow-Origin", "https://arbocontrol-dashboard-38zpvm68v-magaliais.vercel.app");
+  // res.header("Access-Control-Allow-Origin", "http://localhost:3000");
+  // res.header("Access-Control-Allow-Origin", "https://arbocontrol-dashboard-38zpvm68v-magaliais.vercel.app");
 
   try {
     const response = createComplaintController.handle(req, res);
@@ -41,8 +41,8 @@ routes.get("/complaints", (req, res) => {
   console.log("⚡️ [server]: GET /complaints");
 
   // * Permite que a URL de produção faça esta requisição
-  res.header("Access-Control-Allow-Origin", "http://localhost:3000");
-  res.header("Access-Control-Allow-Origin", "https://arbocontrol-dashboard-38zpvm68v-magaliais.vercel.app");
+  // res.header("Access-Control-Allow-Origin", "http://localhost:3000");
+  // res.header("Access-Control-Allow-Origin", "https://arbocontrol-dashboard-38zpvm68v-magaliais.vercel.app");
 
   try {
     const response = getComplaintsController.handle(req, res);
@@ -57,8 +57,8 @@ routes.get("/complaints/:id", (req, res) => {
   console.log(`⚡️ [server]: GET /complaints/${req.params.id}`);
 
   // * Permite que a URL de produção faça esta requisição
-  res.header("Access-Control-Allow-Origin", "http://localhost:3000");
-  res.header("Access-Control-Allow-Origin", "https://arbocontrol-dashboard-38zpvm68v-magaliais.vercel.app");
+  // res.header("Access-Control-Allow-Origin", "http://localhost:3000");
+  // res.header("Access-Control-Allow-Origin", "https://arbocontrol-dashboard-38zpvm68v-magaliais.vercel.app");
 
   try {
     const response = getComplaintController.handle(req, res);
@@ -75,8 +75,8 @@ routes.post("/update-status", (req, res) => {
   );
 
   // * Permite que a URL de produção faça esta requisição
-  res.header("Access-Control-Allow-Origin", "http://localhost:3000");
-  res.header("Access-Control-Allow-Origin", "https://arbocontrol-dashboard-38zpvm68v-magaliais.vercel.app");
+  // res.header("Access-Control-Allow-Origin", "http://localhost:3000");
+  // res.header("Access-Control-Allow-Origin", "https://arbocontrol-dashboard-38zpvm68v-magaliais.vercel.app");
 
   try {
     const response = updateStatusController.handle(req, res);
@@ -91,8 +91,8 @@ routes.get("/dashboard", (req, res) => {
   console.log("⚡️ [server]: GET /dashboard");
 
   // * Permite que a URL de produção faça esta requisição
-  res.header("Access-Control-Allow-Origin", "http://localhost:3000");
-  res.header("Access-Control-Allow-Origin", "https://arbocontrol-dashboard-38zpvm68v-magaliais.vercel.app");
+  // res.header("Access-Control-Allow-Origin", "http://localhost:3000");
+  // res.header("Access-Control-Allow-Origin", "https://arbocontrol-dashboard-38zpvm68v-magaliais.vercel.app");
 
   try {
     const response = getComplaintsStatusController.handle(req, res);
@@ -107,8 +107,8 @@ routes.post("/sessions", (req, res) => {
   console.log("⚡️ [server]: POST /sessions");
 
   // * Permite que a URL de produção faça esta requisição
-  res.header("Access-Control-Allow-Origin", "http://localhost:3000");
-  res.header("Access-Control-Allow-Origin", "https://arbocontrol-dashboard-38zpvm68v-magaliais.vercel.app");
+  // res.header("Access-Control-Allow-Origin", "http://localhost:3000");
+  // res.header("Access-Control-Allow-Origin", "https://arbocontrol-dashboard-38zpvm68v-magaliais.vercel.app");
 
   const { email, password } = req.body as {
     email: string;
@@ -135,8 +135,8 @@ routes.get("/me", (req, res) => {
   const email = req;
 
   // * Permite que a URL de produção faça esta requisição
-  res.header("Access-Control-Allow-Origin", "http://localhost:3000");
-  res.header("Access-Control-Allow-Origin", "https://arbocontrol-dashboard-38zpvm68v-magaliais.vercel.app");
+  // res.header("Access-Control-Allow-Origin", "http://localhost:3000");
+  // res.header("Access-Control-Allow-Origin", "https://arbocontrol-dashboard-38zpvm68v-magaliais.vercel.app");
 
   // ? verifica se o usuário existe no banco
   // const user = users.get(email);
